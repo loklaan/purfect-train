@@ -18,6 +18,7 @@ import asgn2RollingStock.*;
  */
 public class RollingStockTests {
 	private RollingStock testRollingStock;
+	private FreightCar testFreightCar;
 
 	// CONSTANTS
 	final Integer DEFAULT_GROSS_WEIGHT = 100;
@@ -36,7 +37,7 @@ public class RollingStockTests {
 	public void testConstructFreightCarWithNegativeGrossWeight()
 			throws TrainException {
 		Integer negGrossWeight = DEFAULT_GROSS_WEIGHT * -1;
-		testRollingStock = new FreightCar(negGrossWeight, DEFAULT_FREIGHT_TYPE);
+		testFreightCar = new FreightCar(negGrossWeight, DEFAULT_FREIGHT_TYPE);
 	}
 
 	/**
@@ -48,7 +49,7 @@ public class RollingStockTests {
 	public void testConstructFreightCarWithZeroGrossWeight()
 			throws TrainException {
 		Integer zeroGrossWeight = 0;
-		testRollingStock = new FreightCar(zeroGrossWeight, DEFAULT_FREIGHT_TYPE);
+		testFreightCar = new FreightCar(zeroGrossWeight, DEFAULT_FREIGHT_TYPE);
 	}
 
 	/*
@@ -68,9 +69,9 @@ public class RollingStockTests {
 	@Test
 	public void testConstructFreightCarWithValidGoodsType()
 			throws TrainException {
-		testRollingStock = new FreightCar(DEFAULT_GROSS_WEIGHT, "G");
-		testRollingStock = new FreightCar(DEFAULT_GROSS_WEIGHT, "R");
-		testRollingStock = new FreightCar(DEFAULT_GROSS_WEIGHT, "D");
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, "G");
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, "R");
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, "D");
 	}
 
 	/**
@@ -81,25 +82,24 @@ public class RollingStockTests {
 	@Test(expected = TrainException.class)
 	public void testConstructFreightCarWithInValidGoodsType()
 			throws TrainException {
-		testRollingStock = new FreightCar(DEFAULT_GROSS_WEIGHT, "O");
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, "Z");
 		// TODO make this go through every character, or atleast alot?
 	}
 
 	@Test
 	public void testFreightCarReturnValidGoodsType() throws TrainException {
-		testRollingStock = new FreightCar(DEFAULT_GROSS_WEIGHT,
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_FREIGHT_TYPE);
 		assertEquals("Return of valid goods type", DEFAULT_FREIGHT_TYPE,
-				testRollingStock.goodsType());
+				testFreightCar.goodsType());
 	}
 
-	@Test(expected = TrainException.class)
+	@Test
 	public void testFreightCarReturnValidGoodsTypeAgainstInvalidGoodsType()
 			throws TrainException {
-		testRollingStock = new FreightCar(DEFAULT_GROSS_WEIGHT,
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_FREIGHT_TYPE);
-		assertFalse("Return of valid goods type against a invalid comparison",
-				testRollingStock.goodsType() == "O");
+		assertFalse(testFreightCar.goodsType() == "O");
 	}
 
 	// copy of test
