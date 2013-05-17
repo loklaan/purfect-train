@@ -39,10 +39,16 @@ public class FreightCar extends RollingStock {
 		return goodsType == "G" || goodsType == "R" || goodsType == "D";
 	}
 
+	/**
+	 * Returns a human-readable description of the freight car. This has the
+	 * form "Freight(x)" where x is a character ("G", "R" or "D") indicating the
+	 * type of goods the car is designed to carry.
+	 * 
+	 * @return Freight(x) <em>where <strong>x</strong> is a character representation of the goodsType.
+	 */
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Freight(" + this.goodsType + ")";
 	}
 
 }
