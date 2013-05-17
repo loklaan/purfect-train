@@ -130,33 +130,37 @@ public class RollingStockTests {
 	 * Locomotive specific tests
 	 */
 	// TODO comment these locomotive tests
-	
-	@Test (expected = TrainException.class)
+
+	@Test(expected = TrainException.class)
 	public void testLocomotiveWithInvalidClassPower() throws TrainException {
 		String invalidPower = "10";
 		String electricEngine = "E";
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, invalidPower = electric);
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, invalidPower
+				+ electricEngine);
 	}
-	
-	@Test (expected = TrainException.class)
+
+	@Test(expected = TrainException.class)
 	public void testLocomotiveWithInvalidClassEngine() throws TrainException {
 		String power = "5";
 		String invalidHydrogenEngine = "H";
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, power + invalidHydrogenEngine);
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, power
+				+ invalidHydrogenEngine);
 	}
-	
+
 	@Test
 	public void testLocomotiveWithMaxPowerClass() throws TrainException {
 		String validMaxPowerClass = "9E";
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validMaxPowerClass);
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
+				validMaxPowerClass);
 	}
-	
+
 	@Test
 	public void testLocomotiveWithMinPowerClass() throws TrainException {
 		String validMinPowerClass = "1E";
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validMinPowerClass);
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
+				validMinPowerClass);
 	}
-	
+
 	@Test
 	public void testLocomotiveAllValidClassEngineTypes() throws TrainException {
 		String power = "5";
@@ -167,35 +171,44 @@ public class RollingStockTests {
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, power + diesel);
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, power + steam);
 	}
-	
+
 	@Test
 	public void testLocomotiveReturnValidPower() throws TrainException {
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
-		assertEquals("Returned power should be " + (DEFAULT_LOCO_POWER * 100), DEFAULT_LOCO_POWER * 100, testLocomotive.power());		
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_LOCO_CLASS);
+		assertEquals("Returned power should be " + (DEFAULT_LOCO_POWER * 100),
+				Integer.valueOf(DEFAULT_LOCO_POWER * 100), testLocomotive.power());
 	}
-	
+
 	@Test
 	public void testLocomotiveReturnValidMaxPower() throws TrainException {
 		Integer validMaxPower = 9;
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validMaxPower + DEFAULT_LOCO_ENGINE);
-		assertEquals(validMaxPower * 100, testLocomotive.power());
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validMaxPower
+				+ DEFAULT_LOCO_ENGINE);
+		assertEquals(Integer.valueOf(validMaxPower * 100),
+				testLocomotive.power());
 	}
-	
+
 	@Test
 	public void testLocomotiveReturnValidMinPower() throws TrainException {
 		Integer validMinPower = 1;
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validMinPower + DEFAULT_LOCO_ENGINE);
-		assertEquals(validMinPower * 100, testLocomotive.power());
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validMinPower
+				+ DEFAULT_LOCO_ENGINE);
+		assertEquals(Integer.valueOf(validMinPower * 100),
+				testLocomotive.power());
 	}
-	
+
 	@Test
 	public void testLocomotiveToString() throws TrainException {
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
-		assertEquals("Representation of Locomotive should be like 'Loco(x)'.", "Loco(" + DEFAULT_LOCO_CLASS + ")", testLocomotive.toString());
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_LOCO_CLASS);
+		assertEquals("Representation of Locomotive should be like 'Loco(x)'.",
+				"Loco(" + DEFAULT_LOCO_CLASS + ")", testLocomotive.toString());
 	}
-	
+
 	// copy of test
-	@Test (expected = TrainException.class)
+	@Test
+	// (expected = TrainException.class)
 	public void testtest() throws TrainException {
 
 	}
