@@ -17,6 +17,17 @@ import asgn2Exceptions.TrainException;
 public class FreightCar extends RollingStock {
 	private String goodsType;
 
+	/**
+	 * 
+	 * @param grossWeight
+	 *            The freight car's gross weight (fully-laden), in tonnes.
+	 * @param goodsType
+	 *            The type of goods the car is designed to carry (either "G",
+	 *            "R" or "D").
+	 * @throws TrainException
+	 *             If the gross weight is not positive or if the goods' type is
+	 *             invalid.
+	 */
 	public FreightCar(Integer grossWeight, String goodsType)
 			throws TrainException {
 		super(grossWeight);
@@ -35,8 +46,16 @@ public class FreightCar extends RollingStock {
 		return this.goodsType;
 	}
 
+	/**
+	 * Determines if the specified goodsType string matches the scope of
+	 * acceptable Freight goods.
+	 * 
+	 * @param goodsType
+	 *            A single character string representing the type of goods.
+	 * @return True if the goodsType was either G, R or D
+	 */
 	private boolean isValidGoodsType(String goodsType) {
-		return goodsType == "G" || goodsType == "R" || goodsType == "D";
+		return goodsType.matches("G|R|D");
 	}
 
 	/**
@@ -44,7 +63,8 @@ public class FreightCar extends RollingStock {
 	 * form "Freight(x)" where x is a character ("G", "R" or "D") indicating the
 	 * type of goods the car is designed to carry.
 	 * 
-	 * @return Freight(x) <em>where <strong>x</strong> is a character representation of the goodsType.
+	 * @return Freight(x)
+	 *         <em>where <strong>x</strong> is a character representation of the goodsType.
 	 */
 	@Override
 	public String toString() {
