@@ -95,11 +95,21 @@ public class RollingStockTests {
 	}
 
 	@Test
-	public void testFreightCarReturnValidGoodsTypeAgainstInvalidGoodsType()
-			throws TrainException {
+	public void testFreightCarReturnGoodsType() throws TrainException {
 		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_FREIGHT_TYPE);
-		assertFalse(testFreightCar.goodsType() == "O");
+		assertEquals("Returned goodsType is equal to default freight type.",
+				DEFAULT_FREIGHT_TYPE, testFreightCar.goodsType());
+	}
+
+	@Test
+	public void testFreightTrainToString() throws TrainException {
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_FREIGHT_TYPE);
+		assertEquals(
+				"Representation of FreightTrain should be like 'Freight(x)'.",
+				"Freight(" + DEFAULT_FREIGHT_TYPE + ")",
+				testFreightCar.toString());
 	}
 
 	// copy of test
