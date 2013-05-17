@@ -10,6 +10,9 @@ import java.io.Serializable;
 
 public class TrainException extends Exception implements Serializable {
 
+	// Suggested by Eclipse
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Constructs a new TrainException object.
 	 * 
