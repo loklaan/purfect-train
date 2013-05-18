@@ -84,7 +84,7 @@ public class RollingStockTests {
 		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_FREIGHT_TYPE);
 		assertEquals("Default constructed car returns default weight",
-				DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+				DEFAULT_GROSS_WEIGHT, testFreightCar.getGrossWeight());
 	}
 
 	@Test
@@ -92,7 +92,7 @@ public class RollingStockTests {
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_LOCO_CLASS);
 		assertEquals("Default constructed car returns default weight",
-				DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+				DEFAULT_GROSS_WEIGHT, testLocomotive.getGrossWeight());
 	}
 
 	@Test
