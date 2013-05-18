@@ -296,7 +296,6 @@ public class RollingStockTests {
 	/*
 	 * Passenger Car specific tests
 	 */
-	// TODO comment these passengercar tests
 
 	/**
 	 * Passenger cars cannot have negative seating amounts
