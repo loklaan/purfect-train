@@ -298,18 +298,33 @@ public class RollingStockTests {
 	 */
 	// TODO comment these passengercar tests
 
+	/**
+	 * Passenger cars cannot have negative seating amounts
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
 	public void testPassengerCarWithNegativeSeats() throws TrainException {
 		Integer negSeatAmount = -100;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, negSeatAmount);
 	}
 
+	/**
+	 * According to the holy spec, zero seats in a Passenger car should be
+	 * allowed valid
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	// shouldn't throw an exception (its in the spec)
 	public void testPassengerCarWithZeroSeats() throws TrainException {
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, ZERO);
 	}
 
+	/**
+	 * You should be able to board a negative amount of new passengers
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
 	public void testPassengerCarBoardNegativeNewPassengers()
 			throws TrainException {
@@ -319,6 +334,11 @@ public class RollingStockTests {
 		testPassengerCar.board(negNewPassengerAmount);
 	}
 
+	/**
+	 * Boarding zero new passengers should work
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarBoardZeroNewPassengers() throws TrainException {
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
@@ -328,6 +348,11 @@ public class RollingStockTests {
 				ZERO, testPassengerCar.board(ZERO));
 	}
 
+	/**
+	 * Boarding half the seat amount should be fine with no left over passengers
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarBoardNewPassengersHalfOfMaxSeats()
 			throws TrainException {
@@ -338,6 +363,12 @@ public class RollingStockTests {
 				ZERO, testPassengerCar.board(50));
 	}
 
+	/**
+	 * Boarding max amount of passenger to seats should have no left over
+	 * passengers
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarBoardNewPassengersMaxSeats()
 			throws TrainException {
@@ -348,6 +379,12 @@ public class RollingStockTests {
 				ZERO, testPassengerCar.board(DEFAULT_SEAT_AMOUNT));
 	}
 
+	/**
+	 * Attempting to board one to many passengers on a car should have one left
+	 * over passenger
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarBoardNewPassengersOneOverMaxSeats()
 			throws TrainException {
@@ -358,6 +395,11 @@ public class RollingStockTests {
 				1, testPassengerCar.board(DEFAULT_SEAT_AMOUNT + 1));
 	}
 
+	/**
+	 * Alighting a negative amount of passengers should not be valid
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
 	public void testPassengerCarAlightNegativeAmount() throws TrainException {
 		Integer negAlightAmount = -50;
@@ -366,6 +408,12 @@ public class RollingStockTests {
 		testPassengerCar.alight(negAlightAmount);
 	}
 
+	/**
+	 * Alighting more passengers then are currently boarded should not be
+	 * allowed
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
 	public void testPassengerCarBoardNewPassengersAlightPassengersExceedingBoarded()
 			throws TrainException {
@@ -376,8 +424,13 @@ public class RollingStockTests {
 		testPassengerCar.alight(alightAmount + 1);
 	}
 
+	/**
+	 * Alighting from a new unboarded train should not be allowed
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
-	public void testPassengerCarAlightPassengersExceedingBoarded()
+	public void testPassengerCarAlightPassengersExceedingZeroBoarded()
 			throws TrainException {
 		Integer alightAmount = 50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
@@ -385,6 +438,11 @@ public class RollingStockTests {
 		testPassengerCar.alight(alightAmount);
 	}
 
+	/**
+	 * Alighting all passengers in a car should be allowed
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarBoardNewPassengersAlightAllPassengersBoarded()
 			throws TrainException {
@@ -395,6 +453,11 @@ public class RollingStockTests {
 		testPassengerCar.alight(boardAmount);
 	}
 
+	/**
+	 * Alighting one less then all passengers should be allowed
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarBoardNewPassengersAlightLessPassengersBoarded()
 			throws TrainException {
@@ -405,6 +468,11 @@ public class RollingStockTests {
 		testPassengerCar.alight(boardAmount - 1);
 	}
 
+	/**
+	 * Boarding zero passengers should on return of numberOnBoard, be zero
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOnBoardWithZeroBoarded()
 			throws TrainException {
@@ -415,6 +483,11 @@ public class RollingStockTests {
 				testPassengerCar.numberOnBoard());
 	}
 
+	/**
+	 * Return of amount of passengers boarded after boarding shoul be equal
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOnBoardWithSomeBoarded()
 			throws TrainException {
@@ -426,6 +499,12 @@ public class RollingStockTests {
 				testPassengerCar.numberOnBoard());
 	}
 
+	/**
+	 * Return of amount of passengers boarded after boarding max amount should
+	 * be equal
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOnBoardWithMaxBoarded()
 			throws TrainException {
@@ -436,6 +515,12 @@ public class RollingStockTests {
 				testPassengerCar.numberOnBoard());
 	}
 
+	/**
+	 * After attempted overboarded, returning numberOnBoard should be max
+	 * seats/passengers
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOnBoardAfterAttemptedOverBoarding()
 			throws TrainException {
@@ -449,6 +534,12 @@ public class RollingStockTests {
 				DEFAULT_SEAT_AMOUNT, testPassengerCar.numberOnBoard());
 	}
 
+	/**
+	 * After boarding and alighting passengers, return of numberOnBoard should
+	 * be level
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOnBoardAfterBoardingAfterAlighting()
 			throws TrainException {
@@ -462,6 +553,11 @@ public class RollingStockTests {
 				boardAmount - 10, testPassengerCar.numberOnBoard());
 	}
 
+	/**
+	 * Return should be the same as default constructor used
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOfSeatsDefaultAmount()
 			throws TrainException {
@@ -471,6 +567,11 @@ public class RollingStockTests {
 				DEFAULT_SEAT_AMOUNT, testPassengerCar.numberOfSeats());
 	}
 
+	/**
+	 * Zero seats should have numberOfSeats return zero
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarNumberOfSeatsZeroAmount() throws TrainException {
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, ZERO);
@@ -478,6 +579,12 @@ public class RollingStockTests {
 				testPassengerCar.numberOfSeats());
 	}
 
+	/**
+	 * Getting toString of PassengerCar with no boarded passengers should look
+	 * like 'Passenger(0/100)'
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarToStringZeroBoarded() throws TrainException {
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
@@ -487,6 +594,12 @@ public class RollingStockTests {
 				testPassengerCar.toString());
 	}
 
+	/**
+	 * Getting toString of PassengerCar with some boarded passengers should look
+	 * like 'Passenger(50/100)'
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testPassengerCarToStringSomeBoarded() throws TrainException {
 		Integer boardedAmount = 50;
