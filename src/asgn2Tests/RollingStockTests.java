@@ -76,6 +76,29 @@ public class RollingStockTests {
 			throws TrainException {
 		testPassengerCar = new PassengerCar(ZERO, DEFAULT_SEAT_AMOUNT);
 	}
+	
+	// Cars should return weight
+	
+	@Test
+	public void testFreightCarDefaultGetGrossWeight()
+			throws TrainException {
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, DEFAULT_FREIGHT_TYPE);
+		assertEquals("Default constructed car returns default weight", DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+	}
+	
+	@Test
+	public void testLocomotiveDefaultGetGrossWeight()
+			throws TrainException {
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
+		assertEquals("Default constructed car returns default weight", DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+	}
+	
+	@Test
+	public void testPassengerCarDefaultGetGrossWeight()
+			throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, DEFAULT_SEAT_AMOUNT);
+		assertEquals("Default constructed car returns default weight", DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+	}
 
 	/*
 	 * Freight Car specific tests
@@ -289,7 +312,7 @@ public class RollingStockTests {
 
 	@Test(expected = TrainException.class)
 	public void testPassengerCarAlightNegativeAmount() throws TrainException {
-		negAlightAmount = -50;
+		Integer negAlightAmount = -50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
 		testPassengerCar.alight(negAlightAmount);
@@ -298,7 +321,7 @@ public class RollingStockTests {
 	@Test(expected = TrainException.class)
 	public void testPassengerCarBoardNewPassengersAlightPassengersExceedingBoarded()
 			throws TrainException {
-		alightAmount = 50;
+		Integer alightAmount = 50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
 		testPassengerCar.board(alightAmount);
@@ -308,7 +331,7 @@ public class RollingStockTests {
 	@Test(expected = TrainException.class)
 	public void testPassengerCarAlightPassengersExceedingBoarded()
 			throws TrainException {
-		alightAmount = 50;
+		Integer alightAmount = 50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
 		testPassengerCar.alight(alightAmount);
@@ -317,32 +340,114 @@ public class RollingStockTests {
 	@Test
 	public void testPassengerCarBoardNewPassengersAlightAllPassengersBoarded()
 			throws TrainException {
-		boardAmount = 50;
+		Integer boardAmount = 50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
 		testPassengerCar.board(boardAmount);
 		testPassengerCar.alight(boardAmount);
 	}
-	
+
 	@Test
 	public void testPassengerCarBoardNewPassengersAlightLessPassengersBoarded()
 			throws TrainException {
-		boardAmount = 50;
+		Integer boardAmount = 50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
 		testPassengerCar.board(boardAmount);
 		testPassengerCar.alight(boardAmount - 1);
 	}
-	
-	// TODO tests for the numberOnBoard method
-	// TODO tests for the numberOnSeats method
-	// TODO tests for the toString method
-	
-	// TODO onto tests for DepartingTrain in TrainTests
 
-	// copy of test
-	@Test(expected = TrainException.class)
-	public void testtest() throws TrainException {
-
+	@Test
+	public void testPassengerCarNumberOnBoardWithZeroBoarded()
+			throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		testPassengerCar.board(ZERO);
+		assertEquals("Zero passengers boarded.", ZERO,
+				testPassengerCar.numberOnBoard());
 	}
+
+	@Test
+	public void testPassengerCarNumberOnBoardWithSomeBoarded()
+			throws TrainException {
+		Integer boardAmount = 50;
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		testPassengerCar.board(boardAmount);
+		assertEquals("Fifty passengers boarded.", boardAmount,
+				testPassengerCar.numberOnBoard());
+	}
+
+	@Test
+	public void testPassengerCarNumberOnBoardWithMaxBoarded()
+			throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		testPassengerCar.board(DEFAULT_SEAT_AMOUNT);
+		assertEquals("100 passengers boarded.", DEFAULT_SEAT_AMOUNT,
+				testPassengerCar.numberOnBoard());
+	}
+
+	@Test
+	public void testPassengerCarNumberOnBoardAfterAttemptedOverBoarding()
+			throws TrainException {
+		Integer boardAmount = DEFAULT_SEAT_AMOUNT + 10;
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		assertEquals(
+				"Boarding 110 with only 100 seats, 10 left over passengers",
+				10, testPassengerCar.board(boardAmount));
+		assertEquals("110 passengers attempted to board, 100 should be sitted",
+				DEFAULT_SEAT_AMOUNT, testPassengerCar.numberOnBoard());
+	}
+
+	@Test
+	public void testPassengerCarNumberOnBoardAfterBoardingAfterAlighting()
+			throws TrainException {
+		Integer boardAmount = 50;
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		assertEquals("Boarding 50 passengers, none left over", ZERO,
+				testPassengerCar.board(boardAmount));
+		testPassengerCar.alight(boardAmount - 10);
+		assertEquals("50 passengers board, 40 were alighted. 10 should remain",
+				boardAmount - 10, testPassengerCar.numberOnBoard());
+	}
+
+	@Test
+	public void testPassengerCarNumberOfSeatsDefaultAmount()
+			throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		assertEquals("Default amount of seats allocated at construction.",
+				DEFAULT_SEAT_AMOUNT, testPassengerCar.numberOfSeats());
+	}
+
+	@Test
+	public void testPassengerCarNumberOfSeatsZeroAmount() throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, ZERO);
+		assertEquals("Zero amount of seats allocated at construction.", ZERO,
+				testPassengerCar.numberOfSeats());
+	}
+
+	@Test
+	public void testPassengerCarToStringZeroBoarded() throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		assertEquals("Zero passengers on a default constructed car",
+				"Passenger(" + ZERO + "/" + DEFAULT_SEAT_AMOUNT + ")",
+				testPassengerCar.toString());
+	}
+	
+	@Test
+	public void testPassengerCarToStringSomeBoarded() throws TrainException {
+		Integer boardedAmount = 50;
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		assertEquals("All 50 passengers board.", ZERO, testPassengerCar.board(boardedAmount));
+		assertEquals("50 passengers on a default constructed car",
+				"Passenger(" + boardedAmount + "/" + DEFAULT_SEAT_AMOUNT + ")",
+				testPassengerCar.toString());
+	}
+
 }
