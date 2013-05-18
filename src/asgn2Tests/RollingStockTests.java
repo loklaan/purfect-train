@@ -76,28 +76,31 @@ public class RollingStockTests {
 			throws TrainException {
 		testPassengerCar = new PassengerCar(ZERO, DEFAULT_SEAT_AMOUNT);
 	}
-	
+
 	// Cars should return weight
-	
+
 	@Test
-	public void testFreightCarDefaultGetGrossWeight()
-			throws TrainException {
-		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, DEFAULT_FREIGHT_TYPE);
-		assertEquals("Default constructed car returns default weight", DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+	public void testFreightCarDefaultGetGrossWeight() throws TrainException {
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_FREIGHT_TYPE);
+		assertEquals("Default constructed car returns default weight",
+				DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
 	}
-	
+
 	@Test
-	public void testLocomotiveDefaultGetGrossWeight()
-			throws TrainException {
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
-		assertEquals("Default constructed car returns default weight", DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+	public void testLocomotiveDefaultGetGrossWeight() throws TrainException {
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_LOCO_CLASS);
+		assertEquals("Default constructed car returns default weight",
+				DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
 	}
-	
+
 	@Test
-	public void testPassengerCarDefaultGetGrossWeight()
-			throws TrainException {
-		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, DEFAULT_SEAT_AMOUNT);
-		assertEquals("Default constructed car returns default weight", DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
+	public void testPassengerCarDefaultGetGrossWeight() throws TrainException {
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		assertEquals("Default constructed car returns default weight",
+				DEFAULT_GROSS_WEIGHT, testPassengerCar.getGrossWeight());
 	}
 
 	/*
@@ -167,8 +170,12 @@ public class RollingStockTests {
 	/*
 	 * Locomotive specific tests
 	 */
-	// TODO comment these locomotive tests
 
+	/**
+	 * Invalid power amount in classification should not be allowed.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
 	public void testLocomotiveWithInvalidClassPower() throws TrainException {
 		String invalidPower = "10";
@@ -177,6 +184,11 @@ public class RollingStockTests {
 				+ electricEngine);
 	}
 
+	/**
+	 * Invalid engine type in classification should not be allowed.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test(expected = TrainException.class)
 	public void testLocomotiveWithInvalidClassEngine() throws TrainException {
 		String power = "5";
@@ -185,6 +197,11 @@ public class RollingStockTests {
 				+ invalidHydrogenEngine);
 	}
 
+	/**
+	 * Valid max power classification.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveWithMaxPowerClass() throws TrainException {
 		String validMaxPowerClass = "9E";
@@ -192,6 +209,11 @@ public class RollingStockTests {
 				validMaxPowerClass);
 	}
 
+	/**
+	 * Valid min power calssification.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveWithMinPowerClass() throws TrainException {
 		String validMinPowerClass = "1E";
@@ -199,6 +221,11 @@ public class RollingStockTests {
 				validMinPowerClass);
 	}
 
+	/**
+	 * All valid engine types in classification.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveAllValidClassEngineTypes() throws TrainException {
 		String power = "5";
@@ -210,6 +237,11 @@ public class RollingStockTests {
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, power + steam);
 	}
 
+	/**
+	 * Returned pulling power should be the power classification * 100
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveReturnValidPower() throws TrainException {
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
@@ -219,6 +251,11 @@ public class RollingStockTests {
 				testLocomotive.power());
 	}
 
+	/**
+	 * Returned pulling power should be the power classification * 100
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveReturnValidMaxPower() throws TrainException {
 		Integer validMaxPower = 9;
@@ -228,6 +265,11 @@ public class RollingStockTests {
 				testLocomotive.power());
 	}
 
+	/**
+	 * Returned pulling power should be the power classification * 100
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveReturnValidMinPower() throws TrainException {
 		Integer validMinPower = 1;
@@ -237,6 +279,12 @@ public class RollingStockTests {
 				testLocomotive.power());
 	}
 
+	/**
+	 * The human readable representation of a FreightCar should be like
+	 * 'Loco(5E)'.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
 	public void testLocomotiveToString() throws TrainException {
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
@@ -438,15 +486,16 @@ public class RollingStockTests {
 				"Passenger(" + ZERO + "/" + DEFAULT_SEAT_AMOUNT + ")",
 				testPassengerCar.toString());
 	}
-	
+
 	@Test
 	public void testPassengerCarToStringSomeBoarded() throws TrainException {
 		Integer boardedAmount = 50;
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
-		assertEquals("All 50 passengers board.", ZERO, testPassengerCar.board(boardedAmount));
-		assertEquals("50 passengers on a default constructed car",
-				"Passenger(" + boardedAmount + "/" + DEFAULT_SEAT_AMOUNT + ")",
+		assertEquals("All 50 passengers board.", ZERO,
+				testPassengerCar.board(boardedAmount));
+		assertEquals("50 passengers on a default constructed car", "Passenger("
+				+ boardedAmount + "/" + DEFAULT_SEAT_AMOUNT + ")",
 				testPassengerCar.toString());
 	}
 
