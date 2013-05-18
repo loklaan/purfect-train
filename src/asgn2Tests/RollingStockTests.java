@@ -392,7 +392,7 @@ public class RollingStockTests {
 				DEFAULT_SEAT_AMOUNT);
 		assertEquals(
 				"Boarding 101 passengers in a car of 100 seats will return a unable-to-board count of 1",
-				1, testPassengerCar.board(DEFAULT_SEAT_AMOUNT + 1));
+				Integer.valueOf(1), testPassengerCar.board(DEFAULT_SEAT_AMOUNT + 1));
 	}
 
 	/**
@@ -529,7 +529,7 @@ public class RollingStockTests {
 				DEFAULT_SEAT_AMOUNT);
 		assertEquals(
 				"Boarding 110 with only 100 seats, 10 left over passengers",
-				10, testPassengerCar.board(boardAmount));
+				Integer.valueOf(10), testPassengerCar.board(boardAmount));
 		assertEquals("110 passengers attempted to board, 100 should be sitted",
 				DEFAULT_SEAT_AMOUNT, testPassengerCar.numberOnBoard());
 	}
@@ -550,7 +550,7 @@ public class RollingStockTests {
 				testPassengerCar.board(boardAmount));
 		testPassengerCar.alight(boardAmount - 10);
 		assertEquals("50 passengers board, 40 were alighted. 10 should remain",
-				boardAmount - 10, testPassengerCar.numberOnBoard());
+				Integer.valueOf(boardAmount - 40), testPassengerCar.numberOnBoard());
 	}
 
 	/**
