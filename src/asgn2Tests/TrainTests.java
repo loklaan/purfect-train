@@ -33,6 +33,7 @@ public class TrainTests {
 	final String DEFAULT_LOCO_CLASS = DEFAULT_LOCO_POWER + DEFAULT_LOCO_ENGINE;
 	final Integer DEFAULT_SEAT_AMOUNT = 100;
 	final Integer DEFAULT_NEGATIVE_PASSENGERS = -1;
+	final Integer DEFAULT_PASSENGERS = 5;
 
 	@Test
 	public void testAddCarriage() throws TrainException
@@ -64,6 +65,20 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(1);
 		testDepartingTrain.addCarriage(testFreightCar);
+	}
+	
+	// order of carriages must be locomotive - any number of passenger
+	// cars - any number of freight cars
+	@Test (expected = TrainException.class)
+	public void testInvalidTrainCarOrder() throws TrainException
+	{
+		testDepartingTrain = new DepartingTrain();
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, DEFAULT_SEAT_AMOUNT);
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, DEFAULT_FREIGHT_TYPE);
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testFreightCar);
+		testDepartingTrain.addCarriage(testPassengerCar);
 	}
 	
 	// first carriage returns null if no carriages
@@ -113,6 +128,7 @@ public class TrainTests {
 		assertEquals(testDepartingTrain.nextCarriage, testPassengerCar);
 	}
 	
+	// check that numberOnBoard returns the correct number
 	@Test
 	public void testNumberOfPassengersBoarded() throws TrainException
 	{
@@ -122,6 +138,8 @@ public class TrainTests {
 		testDepartingTrain = new DepartingTrain();
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.board(DEFAULT_PASSENGERS);
+		assertEquals(testDepartingTrain.numberOnBoard(), DEFAULT_PASSENGERS);
 	}
 	
 	// number of boarding passengers cannot be negative
