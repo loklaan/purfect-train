@@ -32,10 +32,16 @@ public class DepartingTrain {
 	 *             configuration, or if there are passengers on the train.
 	 */
 	public void addCarriage(RollingStock newCarriage) throws TrainException {
-		// TODO make a class to check config against carriage?
-		if (newCarriage instanceof Locomotive && carriages.size() > 1) {
-			throw new TrainException(
-					"Locomotive must be added as the first carriage.");
+		if (!(newCarriage instanceof Locomotive) && carriages.size() == 0) {
+			throw new TrainException("First carriage must be a Locomotive");
+		}
+		if (newCarriage instanceof Locomotive) {
+			if (carriages.size() > 1) {
+				throw new TrainException(
+						"Locomotive must be added as the first carriage.");	
+			} else {
+				carriages.add(newCarriage);
+			}
 		} else if (newCarriage instanceof FreightCar) {
 			carriages.add(newCarriage);
 		} else if (newCarriage instanceof PassengerCar) {
