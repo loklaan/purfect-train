@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asgn2Exceptions.TrainException;
-import asgn2RollingStock.FreightCar;
-import asgn2RollingStock.Locomotive;
-import asgn2RollingStock.PassengerCar;
-import asgn2RollingStock.RollingStock;
+import asgn2RollingStock.*;
 
 /**
  * <p>
