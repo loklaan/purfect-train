@@ -5,18 +5,7 @@ Tested heirachy of classes to encapsulate different types of train carriages; us
 
 ##Part One
 ###Task One
-**Create the _object classes_ and the heirachy. _Create the `asgn2Exceptions` first._**
-
-####Tester
-* Tests for `RollingStockTests` in `asgn2Tests`, fitting the specifications:
-    - _Anything thats made in Task One that can throw an exception or has obvious breakage/boundary cases._
-
-####Coder
-* Train carriage heirachy of classes in `asgn2RollingStock`
-    - `RollingStock`
-         - `FreightCar`
-         - `Locomotive`
-         - `PassengerCar`
+**`DONE`**
 
 ###Task Two
 **Implement the `DepartingTrain` class and the tests for it, `TrainTests`.**
