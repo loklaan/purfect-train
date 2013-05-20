@@ -45,7 +45,7 @@ public class TrainTests {
 	
 	// the first car must be a locomotive
 	@Test (expected = TrainException.class)
-	void testAddFirstCarriageNotLocomotive() throws TrainException
+	public void testAddFirstCarriageNotLocomotive() throws TrainException
 	{
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
