@@ -201,6 +201,7 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(DEFAULT_PASSENGERS);
 		assertEquals(DEFAULT_PASSENGERS, testDepartingTrain.numberOnBoard());
+		// TODO: do more tests for numberOnBoard & numberOfSeats
 	}
 
 	/**
