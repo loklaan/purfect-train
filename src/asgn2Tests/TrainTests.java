@@ -96,6 +96,21 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testFreightCar);
 		testDepartingTrain.addCarriage(testPassengerCar);
 	}
+	@Test (expected = TrainException.class)
+	public void testInvalidTrainCarOrderFive() throws TrainException
+	{
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.addCarriage(testFreightCar);
+		testDepartingTrain.addCarriage(testLocomotive);
+	}
+	@Test (expected = TrainException.class)
+	public void testInvalidTrainCarOrderSix() throws TrainException
+	{
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testFreightCar);
+		testDepartingTrain.addCarriage(testLocomotive);
+	}
 	
 	// first carriage returns null if no carriages
 	@Test
@@ -129,6 +144,22 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testPassengerCar);
 		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
 		assertEquals(testDepartingTrain.nextCarriage(), testPassengerCar);
+	}
+	
+	// successive return of null on non-existant next carriage
+	@Test
+	public void testNextCarriageReturnsNullNonexistentCarriage() throws TrainException
+	{
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.firstCarriage();
+		assertNull(testDepartingTrain.nextCarriage());
+	}
+	
+	// successive return of null on empty train
+	@Test
+	public void testNextCarriageReturnsNullEmptyTrain() throws TrainException
+	{
+		assertNull(testDepartingTrain.nextCarriage());
 	}
 	
 	// check that numberOnBoard returns the correct number
