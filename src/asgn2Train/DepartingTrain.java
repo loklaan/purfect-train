@@ -212,8 +212,24 @@ public class DepartingTrain {
 		}
 	}
 
+	/**
+	 * Returns the total number of passengers currently on the train, counting
+	 * all passenger cars.
+	 * 
+	 * @return The number of passengers on the train.
+	 */
 	public Integer numberOnBoard() {
 		return this.numberOnBoard;
+	}
+
+	/**
+	 * Returns the total number of seats on the train (whether occupied or not),
+	 * counting all passenger cars.
+	 * 
+	 * @return The number of seats on the train.
+	 */
+	public Integer numberOfSeats() {
+		return this.numberOfSeats;
 	}
 
 }
