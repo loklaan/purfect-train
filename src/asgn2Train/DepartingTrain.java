@@ -273,4 +273,36 @@ public class DepartingTrain {
 		}
 	}
 
+	/**
+	 * Returns a human-readable description of the entire train. This has the
+	 * form of a hyphen-separated list of carriages, starting with the
+	 * locomotive on the left. The description is thus a string "a-b-...-z",
+	 * where a is the human-readable description of the first carriage (the
+	 * locomotive), b is the description of the second carriage, etc, until the
+	 * description of the last carriage z. (Note that there should be no hyphen
+	 * after the last carriage.) For example, a possible train description may
+	 * be "Loco(6D)-Passenger(13/24)-Passenger(16/16)-Freight(G)".<br/>
+	 * <br/>
+	 * 
+	 * In the degenerate case of a "train" with no carriages, the empty string
+	 * is returned.
+	 * 
+	 * @return A human-readable description of the entire train.
+	 */
+	@Override
+	public String toString() {
+		String string = "";
+		RollingStock nextCarriage;
+		if (!isTrainEmpty()) {
+			nextCarriage = firstCarriage();
+			string += nextCarriage;
+			nextCarriage = nextCarriage();
+			while (nextCarriage != null) {
+				string += "-" + nextCarriage.toString();
+				nextCarriage = nextCarriage();
+			}
+		}
+		return string;
+	}
+
 }
