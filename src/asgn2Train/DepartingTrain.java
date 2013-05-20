@@ -47,6 +47,7 @@ public class DepartingTrain {
 	private List<RollingStock> carriages;
 	private Integer numberOnBoard;
 	private Integer numberOfSeats;
+	private Integer trainGrossWeight;
 	private Integer carriagesIterator;
 
 	/**
@@ -56,6 +57,7 @@ public class DepartingTrain {
 		this.carriages = new ArrayList<RollingStock>();
 		this.numberOfSeats = 0;
 		this.numberOnBoard = 0;
+		this.trainGrossWeight = 0;
 		this.carriagesIterator = -1;
 	}
 
@@ -83,21 +85,22 @@ public class DepartingTrain {
 				throw new TrainException(
 						"Locomotive must be added as the first carriage.");
 			} else {
-				carriages.add(newCarriage);
+				carriages.add(newCarriage); // add
 			}
 		} else if (newCarriage instanceof FreightCar) {
-			carriages.add(newCarriage);
+			carriages.add(newCarriage); // add
 		} else if (newCarriage instanceof PassengerCar) {
-			if (carriages.size() > 1 && getLastCarriage() instanceof FreightCar) {
+			if (getLastCarriage() instanceof FreightCar) {
 				throw new TrainException(
 						"Passengers must be added after a Locomotive and before FreightCars.");
 			}
-			carriages.add(newCarriage);
+			carriages.add(newCarriage); // add
 			this.numberOfSeats += ((PassengerCar) getLastCarriage())
 					.numberOfSeats();
 			this.numberOnBoard += ((PassengerCar) getLastCarriage())
 					.numberOnBoard();
 		}
+		this.trainGrossWeight += getLastCarriage().getGrossWeight();
 	}
 
 	/**
@@ -227,6 +230,26 @@ public class DepartingTrain {
 	 */
 	public Integer numberOfSeats() {
 		return this.numberOfSeats;
+	}
+
+	/**
+	 * Returns whether or not the train is capable of moving. A train can move
+	 * if its locomotive's pulling power equals or exceeds the train's total
+	 * weight (including the locomotive itself).<br/>
+	 * <br/>
+	 * 
+	 * In the degenerate case of a "train" which doesn't have any rolling stock
+	 * at all yet, the method returns true.
+	 * 
+	 * @return True if the train can move (or contains no carriages), false
+	 *         otherwise.
+	 */
+	public boolean trainCanMove() {
+		if (isTrainEmpty()) {
+			return true;
+		} else {
+			return ((Locomotive) firstCarriage()).power() >= this.trainGrossWeight;
+		}
 	}
 
 }
