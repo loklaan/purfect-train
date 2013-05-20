@@ -75,7 +75,7 @@ public class DepartingTrain {
 	 *             configuration, or if there are passengers on the train.
 	 */
 	public void addCarriage(RollingStock newCarriage) throws TrainException {
-		if (!(newCarriage instanceof Locomotive) && carriages.size() == 0) {
+		if (!(newCarriage instanceof Locomotive) && isTrainEmpty()) {
 			throw new TrainException("First carriage must be a Locomotive");
 		} else if (this.numberOnBoard > 0) {
 			throw new TrainException(
