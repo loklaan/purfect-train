@@ -170,7 +170,7 @@ public class DepartingTrain {
 	 * @return If the train is empty of carriages.
 	 */
 	private boolean isTrainEmpty() {
-		return carriages.isEmpty(); // or carriages.isEmpty()?
+		return carriages.isEmpty(); // or carriages.size() - 1 ?
 	}
 
 	/**
@@ -210,6 +210,10 @@ public class DepartingTrain {
 			}
 			return passengers;
 		}
+	}
+
+	public Integer numberOnBoard() {
+		return this.numberOnBoard;
 	}
 
 }
