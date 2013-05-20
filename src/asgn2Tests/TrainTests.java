@@ -139,7 +139,7 @@ public class TrainTests {
 	public void testFirstCarriageReturnsCorrectCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.firstCarriage(), testLocomotive);
+		assertEquals(testLocomotive, testDepartingTrain.firstCarriage());
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class TrainTests {
 	public void testNextCarriageReturnsFirstCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
+		assertEquals(testLocomotive, testDepartingTrain.nextCarriage());
 	}
 
 	/**
@@ -163,8 +163,8 @@ public class TrainTests {
 	public void testNextCarriageReturnsCorrectCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
-		assertEquals(testDepartingTrain.nextCarriage(), testPassengerCar);
+		assertEquals(testLocomotive, testDepartingTrain.nextCarriage());
+		assertEquals(testPassengerCar, testDepartingTrain.nextCarriage());
 	}
 
 	/**
@@ -200,7 +200,7 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(DEFAULT_PASSENGERS);
-		assertEquals(testDepartingTrain.numberOnBoard(), DEFAULT_PASSENGERS);
+		assertEquals(DEFAULT_PASSENGERS, testDepartingTrain.numberOnBoard());
 	}
 
 	/**
@@ -214,5 +214,7 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(DEFAULT_NEGATIVE_PASSENGERS);
 	}
+	
+	
 
 }
