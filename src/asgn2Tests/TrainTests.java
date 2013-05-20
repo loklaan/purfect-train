@@ -36,6 +36,7 @@ public class TrainTests {
 	final Integer DEFAULT_NEGATIVE_PASSENGERS = -1;
 	final Integer DEFAULT_PASSENGERS = 5;
 	
+	// initialises train and carriages for tests
 	@Before
 	public void initial() throws TrainException
 	{
@@ -83,7 +84,7 @@ public class TrainTests {
 	@Test
 	public void testFirstCarriageNull() throws TrainException
 	{
-		assertNull(testDepartingTrain.firstCarriage);
+		assertNull(testDepartingTrain.firstCarriage());
 	}
 	
 	@Test
@@ -91,7 +92,7 @@ public class TrainTests {
 	{
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.firstCarriage, testLocomotive);
+		assertEquals(testDepartingTrain.firstCarriage(), testLocomotive);
 	}
 	
 	// nextCarriage returns the first carriage if called before first carriage
@@ -100,7 +101,7 @@ public class TrainTests {
 	{
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.nextCarriage, testLocomotive);
+		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
 	}
 	
 	// successive nextCarriage calls return cars in order
@@ -109,8 +110,8 @@ public class TrainTests {
 	{
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.nextCarriage, testLocomotive);
-		assertEquals(testDepartingTrain.nextCarriage, testPassengerCar);
+		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
+		assertEquals(testDepartingTrain.nextCarriage(), testPassengerCar);
 	}
 	
 	// check that numberOnBoard returns the correct number
