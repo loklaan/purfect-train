@@ -252,4 +252,25 @@ public class DepartingTrain {
 		}
 	}
 
+	/**
+	 * Removes the last carriage from the train. (This may be the locomotive if
+	 * it is the only item of rolling stock on the train.) However, shunting
+	 * operations may not be performed if there are passengers on the train.
+	 * 
+	 * @throws TrainException
+	 *             If there is no rolling stock on the "train", or if there are
+	 *             passengers on the train.
+	 */
+	public void removeCarriage() throws TrainException {
+		if (isTrainEmpty()) {
+			throw new TrainException(
+					"Cannot remove a carriage from an empty Train.");
+		} else if (this.numberOnBoard > 0) {
+			throw new TrainException(
+					"Cannot remove a carriage from a boarded Train.");
+		} else {
+			carriages.remove(getLastCarriage());
+		}
+	}
+
 }
