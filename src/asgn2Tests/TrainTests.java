@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
-import com.sun.corba.se.impl.ior.FreezableList;
-
 import asgn2Exceptions.TrainException;
 import asgn2RollingStock.*;
 import asgn2Train.DepartingTrain;
@@ -279,6 +277,77 @@ public class TrainTests {
 				.addCarriage(new FreightCar(200, DEFAULT_FREIGHT_TYPE));
 		// total train weight == 400
 		assertFalse(testDepartingTrain.trainCanMove());
+	}
+
+	/**
+	 * A carriage cannot be removed if the train has none.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testRemoveCarriageEmpty() throws TrainException {
+		testDepartingTrain.removeCarriage();
+	}
+
+	/**
+	 * A carriage cannot be removed if the train has passengers aboard.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testRemoveCarriageWithPassengers() throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.board(DEFAULT_PASSENGERS);
+		assertEquals(DEFAULT_PASSENGERS, testDepartingTrain.numberOnBoard());
+		testDepartingTrain.removeCarriage();
+	}
+
+	/**
+	 * A train consisting of only a Locomotive can have that Locomotive removed.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testRemoveCarriageLocomotive() throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		assertEquals(testLocomotive, testDepartingTrain.firstCarriage());
+		assertNull(testDepartingTrain.nextCarriage()); // there is no next car
+		testDepartingTrain.removeCarriage();
+	}
+
+	/**
+	 * A train consisting of a Locomotive and a Passenger Car can have that last
+	 * Passenger Car removed.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testRemoveCarriageLocomotivePassengerCar()
+			throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		assertEquals(testLocomotive, testDepartingTrain.firstCarriage());
+		assertEquals(testPassengerCar, testDepartingTrain.nextCarriage());
+		assertNull(testDepartingTrain.nextCarriage()); // there is no next car
+		testDepartingTrain.removeCarriage();
+	}
+
+	/**
+	 * A train consisting of a number of cars can have all those cars removed
+	 * (including locomotive).
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testRemoveCarriageAllCarriagesInTrain() throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.addCarriage(testFreightCar);
+
+		testDepartingTrain.removeCarriage();
+		testDepartingTrain.removeCarriage();
+		testDepartingTrain.removeCarriage();
 	}
 
 }
