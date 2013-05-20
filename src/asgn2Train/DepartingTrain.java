@@ -87,7 +87,6 @@ public class DepartingTrain {
 						"Locomotive must be added as the first carriage.");
 			} else {
 				carriages.add(newCarriage);
-				this.carriagesIterator = 0;
 			}
 		} else if (newCarriage instanceof FreightCar) {
 			carriages.add(newCarriage);
@@ -160,9 +159,9 @@ public class DepartingTrain {
 	 */
 	private RollingStock getLastCarriage() {
 		if (isTrainEmpty()) {
-			return carriages.get(carriages.size() - 1);
+			return null;
 		}
-		return null;
+		return carriages.get(carriages.size() - 1);
 	}
 
 	/**
@@ -171,7 +170,7 @@ public class DepartingTrain {
 	 * @return If the train is empty of carriages.
 	 */
 	private boolean isTrainEmpty() {
-		return carriages.size() != 0; // or carriages.isEmpty()?
+		return carriages.isEmpty(); // or carriages.size() - 1 ?
 	}
 
 	/**
@@ -211,6 +210,26 @@ public class DepartingTrain {
 			}
 			return passengers;
 		}
+	}
+
+	/**
+	 * Returns the total number of passengers currently on the train, counting
+	 * all passenger cars.
+	 * 
+	 * @return The number of passengers on the train.
+	 */
+	public Integer numberOnBoard() {
+		return this.numberOnBoard;
+	}
+
+	/**
+	 * Returns the total number of seats on the train (whether occupied or not),
+	 * counting all passenger cars.
+	 * 
+	 * @return The number of seats on the train.
+	 */
+	public Integer numberOfSeats() {
+		return this.numberOfSeats;
 	}
 
 }
