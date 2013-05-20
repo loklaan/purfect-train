@@ -350,4 +350,32 @@ public class TrainTests {
 		testDepartingTrain.removeCarriage();
 	}
 
+	/**
+	 * An empty trains toString returns an empty string.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testToStringEmptyTrain() throws TrainException {
+		assertEquals("", testDepartingTrain.toString());
+	}
+
+	/**
+	 * A 'filled' trains toString, in this case, should be the same as specified
+	 * by a combination of constants.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testToStringFilledTrain() throws TrainException {
+		Integer boardedPassengers = 50;
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.addCarriage(testFreightCar);
+		testDepartingTrain.board(boardedPassengers);
+		assertEquals("Loco(" + DEFAULT_LOCO_CLASS + ")-Passenger("
+				+ boardedPassengers + "/" + DEFAULT_SEAT_AMOUNT + ")-Freight("
+				+ DEFAULT_FREIGHT_TYPE + ")", testDepartingTrain.toString());
+	}
+
 }
