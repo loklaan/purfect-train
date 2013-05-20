@@ -15,7 +15,6 @@ import asgn2RollingStock.*;
  * 
  */
 public class RollingStockTests {
-	private RollingStock testRollingStock;
 	private FreightCar testFreightCar;
 	private Locomotive testLocomotive;
 	private PassengerCar testPassengerCar;

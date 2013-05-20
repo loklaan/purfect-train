@@ -14,11 +14,11 @@ import asgn2Train.DepartingTrain;
 
 /**
  * Tests for DepartingTrain class.
+ * 
  * @author Murray Coggan - 8291951
- *
+ * 
  */
 public class TrainTests {
-	private RollingStock testRollingStock;
 	private FreightCar testFreightCar;
 	private Locomotive testLocomotive;
 	private PassengerCar testPassengerCar;
@@ -35,147 +35,184 @@ public class TrainTests {
 	final Integer DEFAULT_SEAT_AMOUNT = 100;
 	final Integer DEFAULT_NEGATIVE_PASSENGERS = -1;
 	final Integer DEFAULT_PASSENGERS = 5;
-	
+
 	@Before
-	public void initial() throws TrainException
-	{
+	public void initialisation() throws TrainException {
 		testDepartingTrain = new DepartingTrain();
-		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_LOCO_CLASS);
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
-		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, DEFAULT_FREIGHT_TYPE);
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_FREIGHT_TYPE);
 	}
-	
+
 	@Test
-	public void testAddCarriage() throws TrainException
-	{
+	public void testAddCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 	}
-	
-	// the first car must be a locomotive
-	@Test (expected = TrainException.class)
-	public void testAddFirstCarriageNotLocomotive() throws TrainException
-	{
+
+	/**
+	 * The first car must be a locomotive.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testAddFirstCarriageNotLocomotive() throws TrainException {
 		testDepartingTrain.addCarriage(testPassengerCar);
 	}
-	
-	// cannot add carriages if there are passengers on board
-	@Test (expected = TrainException.class)
-	public void testAddCarriagePassengersOnTrain() throws TrainException
-	{
+
+	/**
+	 * Cannot add carriages if there are passengers on board.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testAddCarriagePassengersOnTrain() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(1);
 		testDepartingTrain.addCarriage(testFreightCar);
 	}
-	
-	// order of carriages must be locomotive - any number of passenger
-	// cars - any number of freight cars
-	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrderOne() throws TrainException
-	{
+
+	/**
+	 * Order of carriages must be locomotive - any number of passenger cars -
+	 * any number of freight cars.
+	 * 
+	 * A number of different orderings are being tested.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderOne() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testFreightCar);
 		testDepartingTrain.addCarriage(testPassengerCar);
 	}
-	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrderTwo() throws TrainException
-	{
+
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderTwo() throws TrainException {
 		testDepartingTrain.addCarriage(testFreightCar);
 	}
-	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrderThree() throws TrainException
-	{
+
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderThree() throws TrainException {
 		testDepartingTrain.addCarriage(testPassengerCar);
 	}
-	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrderFour() throws TrainException
-	{
-		testDepartingTrain.addCarriage(testLocomotive);
-		testDepartingTrain.addCarriage(testPassengerCar);
-		testDepartingTrain.addCarriage(testFreightCar);
-		testDepartingTrain.addCarriage(testPassengerCar);
-	}
-	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrderFive() throws TrainException
-	{
+
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderFour() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.addCarriage(testFreightCar);
+		testDepartingTrain.addCarriage(testPassengerCar);
+	}
+
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderFive() throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.addCarriage(testFreightCar);
 		testDepartingTrain.addCarriage(testLocomotive);
 	}
-	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrderSix() throws TrainException
-	{
+
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderSix() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testFreightCar);
 		testDepartingTrain.addCarriage(testLocomotive);
 	}
-	
-	// first carriage returns null if no carriages
+
+	/**
+	 * First carriage returns null if no carriages.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testFirstCarriageNull() throws TrainException
-	{
+	public void testFirstCarriageNull() throws TrainException {
 		assertNull(testDepartingTrain.firstCarriage());
 	}
-	
+
+	/**
+	 * nextCarriage works if firstCarriage has not been called
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testFirstCarriageReturnsCorrectCarriage() throws TrainException
-	{
+	public void testFirstCarriageReturnsCorrectCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		assertEquals(testDepartingTrain.firstCarriage(), testLocomotive);
 	}
-	
-	// nextCarriage returns the first carriage if called before first carriage
+
+	/**
+	 * nextCarriage returns the first carriage if called before first carriage
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testNextCarriageReturnsFirstCarriage() throws TrainException
-	{
+	public void testNextCarriageReturnsFirstCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
 	}
-	
-	// successive nextCarriage calls return cars in order
+
+	/**
+	 * Successive nextCarriage calls return cars in order.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testNextCarriageReturnsCorrectCarriage() throws TrainException
-	{
+	public void testNextCarriageReturnsCorrectCarriage() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
 		assertEquals(testDepartingTrain.nextCarriage(), testPassengerCar);
 	}
-	
-	// successive return of null on non-existant next carriage
+
+	/**
+	 * Successive return of null on non-existant next carriage.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testNextCarriageReturnsNullNonexistentCarriage() throws TrainException
-	{
+	public void testNextCarriageReturnsNullNonexistentCarriage()
+			throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.firstCarriage();
 		assertNull(testDepartingTrain.nextCarriage());
 	}
-	
-	// successive return of null on empty train
+
+	/**
+	 * Successive return of null on empty train.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testNextCarriageReturnsNullEmptyTrain() throws TrainException
-	{
+	public void testNextCarriageReturnsNullEmptyTrain() throws TrainException {
 		assertNull(testDepartingTrain.nextCarriage());
 	}
-	
-	// check that numberOnBoard returns the correct number
+
+	/**
+	 * Check that numberOnBoard returns the correct number.
+	 * 
+	 * @throws TrainException
+	 */
 	@Test
-	public void testNumberOfPassengersBoarded() throws TrainException
-	{
+	public void testNumberOfPassengersBoarded() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(DEFAULT_PASSENGERS);
 		assertEquals(testDepartingTrain.numberOnBoard(), DEFAULT_PASSENGERS);
 	}
-	
-	// number of boarding passengers cannot be negative
-	@Test (expected = TrainException.class)
-	public void testBoardNegativePassengers() throws TrainException
-	{
+
+	/**
+	 * Number of boarding passengers cannot be negative.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testBoardNegativePassengers() throws TrainException {
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(DEFAULT_NEGATIVE_PASSENGERS);
