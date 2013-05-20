@@ -9,6 +9,7 @@ import asgn2RollingStock.FreightCar;
 import asgn2RollingStock.Locomotive;
 import asgn2RollingStock.PassengerCar;
 import asgn2RollingStock.RollingStock;
+import asgn2Train.DepartingTrain;
 
 /**
  * Tests for DepartingTrain class.
