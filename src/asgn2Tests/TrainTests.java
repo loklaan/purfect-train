@@ -72,9 +72,27 @@ public class TrainTests {
 	// order of carriages must be locomotive - any number of passenger
 	// cars - any number of freight cars
 	@Test (expected = TrainException.class)
-	public void testInvalidTrainCarOrder() throws TrainException
+	public void testInvalidTrainCarOrderOne() throws TrainException
 	{
 		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testFreightCar);
+		testDepartingTrain.addCarriage(testPassengerCar);
+	}
+	@Test (expected = TrainException.class)
+	public void testInvalidTrainCarOrderTwo() throws TrainException
+	{
+		testDepartingTrain.addCarriage(testFreightCar);
+	}
+	@Test (expected = TrainException.class)
+	public void testInvalidTrainCarOrderThree() throws TrainException
+	{
+		testDepartingTrain.addCarriage(testPassengerCar);
+	}
+	@Test (expected = TrainException.class)
+	public void testInvalidTrainCarOrderFour() throws TrainException
+	{
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.addCarriage(testFreightCar);
 		testDepartingTrain.addCarriage(testPassengerCar);
 	}
