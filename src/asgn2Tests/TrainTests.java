@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.Before;
 
+import com.sun.corba.se.impl.ior.FreezableList;
+
 import asgn2Exceptions.TrainException;
 import asgn2RollingStock.*;
 import asgn2Train.DepartingTrain;
@@ -214,7 +216,69 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testPassengerCar);
 		testDepartingTrain.board(DEFAULT_NEGATIVE_PASSENGERS);
 	}
-	
-	
+
+	/**
+	 * An empty ("degenerate") train is deemed to be able to move. Spec.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testTrainCanMoveEmptyTrain() throws TrainException {
+		assertTrue(testDepartingTrain.trainCanMove());
+	}
+
+	/**
+	 * A train that weighs less than the maximum pulling power is able to move.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testTrainCanMoveValidTrainGrossWeight() throws TrainException {
+		// power class 3E == 300 pulling power
+		testDepartingTrain.addCarriage(new Locomotive(100, "3E"));
+		testDepartingTrain
+				.addCarriage(new PassengerCar(50, DEFAULT_SEAT_AMOUNT));
+		testDepartingTrain
+				.addCarriage(new FreightCar(50, DEFAULT_FREIGHT_TYPE));
+		// total train weight == 200
+		assertTrue(testDepartingTrain.trainCanMove());
+	}
+
+	/**
+	 * A train that weighs the same as the maximum pulling power is able to
+	 * move.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testTrainCanMoveMaxValidTrainGrossWeight()
+			throws TrainException {
+		// power class 3E == 300 pulling power
+		testDepartingTrain.addCarriage(new Locomotive(100, "3E"));
+		testDepartingTrain.addCarriage(new PassengerCar(100,
+				DEFAULT_SEAT_AMOUNT));
+		testDepartingTrain
+				.addCarriage(new FreightCar(100, DEFAULT_FREIGHT_TYPE));
+		// total train weight == 300
+		assertTrue(testDepartingTrain.trainCanMove());
+	}
+
+	/**
+	 * A train that weighs more than the maximum pulling power is not able to
+	 * move.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testTrainCanMoveInvalidTrainGrossWeight() throws TrainException {
+		// power class 3E == 300 pulling power
+		testDepartingTrain.addCarriage(new Locomotive(100, "3E"));
+		testDepartingTrain.addCarriage(new PassengerCar(100,
+				DEFAULT_SEAT_AMOUNT));
+		testDepartingTrain
+				.addCarriage(new FreightCar(200, DEFAULT_FREIGHT_TYPE));
+		// total train weight == 400
+		assertFalse(testDepartingTrain.trainCanMove());
+	}
 
 }
