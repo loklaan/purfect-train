@@ -196,6 +196,32 @@ public class RollingStockTests {
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, power
 				+ invalidHydrogenEngine);
 	}
+	
+	/**
+	 * Invalid classification format should not be allowed.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testLocomotiveWithInvalidClassificationFormatInvalidPowerValidEngine() throws TrainException {
+		String invalidPower = "F";
+		String validEngine = "E";
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, invalidPower
+				+ validEngine);
+	}
+	
+	/**
+	 * Invalid classification format should not be allowed.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test(expected = TrainException.class)
+	public void testLocomotiveWithInvalidClassificationFormatValidPowerInvalidEngine() throws TrainException {
+		String validPower = "5";
+		String invalidEngine = "5";
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, validPower
+				+ invalidEngine);
+	}
 
 	/**
 	 * Valid max power classification.
