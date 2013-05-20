@@ -35,7 +35,7 @@ public class TrainTests {
 	final Integer DEFAULT_NEGATIVE_PASSENGERS = -1;
 
 	@Test
-	public void testAddCarriage() 
+	public void testAddCarriage() throws TrainException
 	{
 		testDepartingTrain = new DepartingTrain();
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
@@ -44,7 +44,7 @@ public class TrainTests {
 	
 	// the first car must be a locomotive
 	@Test (expected = TrainException.class)
-	void testAddFirstCarriageNotLocomotive()
+	void testAddFirstCarriageNotLocomotive() throws TrainException
 	{
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
 				DEFAULT_SEAT_AMOUNT);
@@ -52,16 +52,30 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testPassengerCar);
 	}
 	
+	// cannot add carriages if there are passengers on board
+	@Test (expected = TrainException.class)
+	public void testAddCarriagePassengersOnTrain() throws TrainException
+	{
+		testDepartingTrain = new DepartingTrain();
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT, DEFAULT_SEAT_AMOUNT);
+		testFreightCar = new FreightCar(DEFAULT_GROSS_WEIGHT, DEFAULT_FREIGHT_TYPE);
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.board(1);
+		testDepartingTrain.addCarriage(testFreightCar);
+	}
+	
 	// first carriage returns null if no carriages
 	@Test
-	public void testFirstCarriageNull()
+	public void testFirstCarriageNull() throws TrainException
 	{
 		testDepartingTrain = new DepartingTrain();
 		assertNull(testDepartingTrain.firstCarriage);
 	}
 	
 	@Test
-	public void testFirstCarriageReturnsCorrectCarriage()
+	public void testFirstCarriageReturnsCorrectCarriage() throws TrainException
 	{
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
@@ -74,7 +88,7 @@ public class TrainTests {
 	
 	// nextCarriage returns the first carriage if called before first carriage
 	@Test
-	public void testNextCarriageReturnsFirstCarriage()
+	public void testNextCarriageReturnsFirstCarriage() throws TrainException
 	{
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
@@ -87,7 +101,7 @@ public class TrainTests {
 	
 	// successive nextCarriage calls return cars in order
 	@Test
-	public void testNextCarriageReturnsCorrectCarriage()
+	public void testNextCarriageReturnsCorrectCarriage() throws TrainException
 	{
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
@@ -99,9 +113,20 @@ public class TrainTests {
 		assertEquals(testDepartingTrain.nextCarriage, testPassengerCar);
 	}
 	
+	@Test
+	public void testNumberOfPassengersBoarded() throws TrainException
+	{
+		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
+		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
+				DEFAULT_SEAT_AMOUNT);
+		testDepartingTrain = new DepartingTrain();
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+	}
+	
 	// number of boarding passengers cannot be negative
 	@Test (expected = TrainException.class)
-	public void testBoardNegativePassengers()
+	public void testBoardNegativePassengers() throws TrainException
 	{
 		testLocomotive = new Locomotive(DEFAULT_GROSS_WEIGHT, DEFAULT_LOCO_CLASS);
 		testPassengerCar = new PassengerCar(DEFAULT_GROSS_WEIGHT,
