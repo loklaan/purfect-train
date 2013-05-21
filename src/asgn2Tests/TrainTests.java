@@ -352,6 +352,58 @@ public class TrainTests {
 	}
 
 	/**
+	 * firstCarriage should return a Locomotive after it's been added AFTER
+	 * removing all carriages in a train.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testRemoveCarriageAllCarriagesInTrainGetFirstAfterReAddingLocomotive()
+			throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.addCarriage(testFreightCar);
+
+		testDepartingTrain.removeCarriage();
+		testDepartingTrain.removeCarriage();
+		testDepartingTrain.removeCarriage();
+
+		testDepartingTrain.addCarriage(testLocomotive);
+
+		assertEquals(
+				"Should return Locomotive that was added on an *emptied* train.",
+				testLocomotive, testDepartingTrain.firstCarriage());
+	}
+
+	/**
+	 * nextCarriage after preceeding calls to firstCarriage or nextCarriage
+	 * should be null after removing all carriages from the train and readding a
+	 * locomotive.
+	 * 
+	 * @throws TrainException
+	 */
+	@Test
+	public void testGetNextCarriageAfterRemovingAllAndAddingLocomotive()
+			throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testPassengerCar);
+		testDepartingTrain.addCarriage(testFreightCar);
+
+		assertEquals(testLocomotive, testDepartingTrain.firstCarriage());
+		assertEquals(testPassengerCar, testDepartingTrain.nextCarriage());
+
+		testDepartingTrain.removeCarriage();
+		testDepartingTrain.removeCarriage();
+		testDepartingTrain.removeCarriage();
+
+		testDepartingTrain.addCarriage(testLocomotive);
+
+		assertNull(
+				"Should return null as the nextCarriage iterator cannot be followed after removing trains.",
+				testDepartingTrain.nextCarriage());
+	}
+
+	/**
 	 * An empty trains toString returns an empty string.
 	 * 
 	 * @throws TrainException
