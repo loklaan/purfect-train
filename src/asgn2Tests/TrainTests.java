@@ -82,8 +82,7 @@ public class TrainTests {
 	
 	// first carriage returns null if no carriages
 	@Test
-	public void testFirstCarriageNull() throws TrainException
-	{
+	public void testFirstCarriageNull() throws TrainException {
 		assertNull(testDepartingTrain.firstCarriage());
 	}
 	
@@ -92,7 +91,7 @@ public class TrainTests {
 	{
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.firstCarriage(), testLocomotive);
+		assertEquals(testLocomotive, testDepartingTrain.firstCarriage());
 	}
 	
 	// nextCarriage returns the first carriage if called before first carriage
@@ -101,7 +100,7 @@ public class TrainTests {
 	{
 		testDepartingTrain.addCarriage(testLocomotive);
 		testDepartingTrain.addCarriage(testPassengerCar);
-		assertEquals(testDepartingTrain.nextCarriage(), testLocomotive);
+		assertEquals(testLocomotive, testDepartingTrain.nextCarriage());
 	}
 	
 	// successive nextCarriage calls return cars in order
