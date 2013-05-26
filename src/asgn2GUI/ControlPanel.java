@@ -74,8 +74,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 
 	private JPanel createConductorControlPanel() {
 		JPanel panel = createDefaultControlPanel(CONDUCTOR_ROLE);
-		JButton button = new JButton("Great Button");
-
+		JButton button = new JButton("Gay Button");
 		panel.add(button);
 
 		return panel;
