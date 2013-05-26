@@ -29,8 +29,8 @@ public class DrawTest extends JFrame implements ActionListener {
 
 	    theGraphics = new TrainDraw();
 	    theGraphics.setBackground(Color.LIGHT_GRAY);
-	    
-	    add(theGraphics,BorderLayout.CENTER);
+	    JScrollPane scroller = new JScrollPane(theGraphics);
+	    add(scroller,BorderLayout.CENTER);
 
 	    btmPanel = new JPanel();
 	    btmPanel.setBackground(Color.LIGHT_GRAY);
