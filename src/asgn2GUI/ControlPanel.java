@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -56,20 +57,26 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private void createGUI() {
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());		
 
 //		this.panelTrain = createTrainCanvas();
 //		this.getContentPane().add(panelTrain, BorderLayout.NORTH);
 
 		this.panelDriver = createDriverControlPanel();
-		this.getContentPane().add(panelDriver, BorderLayout.WEST);
+		this.getContentPane().add(panelDriver, BorderLayout.CENTER);
 
 		this.panelConductor = createConductorControlPanel();
 		this.getContentPane().add(panelConductor, BorderLayout.EAST);
+		
+		// end of method
+		repaint();
 	}
 
 	private JPanel createConductorControlPanel() {
 		JPanel panel = createDefaultControlPanel(CONDUCTOR_ROLE);
+		JButton button = new JButton("Great Button");
+
+		panel.add(button);
 
 		return panel;
 	}
