@@ -14,8 +14,9 @@ public class DrawTest extends JFrame implements ActionListener {
 	private static TrainDraw theGraphics;
 	private static DepartingTrain theTrain;
 	private static JPanel btmPanel;
+	private static JScrollPane scroller;
 	private static int WIDTH = 600;
-	private static int HEIGHT = 150;
+	private static int HEIGHT = 200;
 	
 	public DrawTest(){
 		createGUI();
@@ -29,7 +30,7 @@ public class DrawTest extends JFrame implements ActionListener {
 
 	    theGraphics = new TrainDraw();
 	    theGraphics.setBackground(Color.LIGHT_GRAY);
-	    JScrollPane scroller = new JScrollPane(theGraphics);
+	    scroller = new JScrollPane(theGraphics);
 	    add(scroller,BorderLayout.CENTER);
 
 	    btmPanel = new JPanel();
@@ -40,8 +41,10 @@ public class DrawTest extends JFrame implements ActionListener {
 	    loadButton.setBackground(Color.WHITE);
 	    loadButton.addActionListener(this);
 	    btmPanel.add(loadButton);
-	    
 	    this.getContentPane().add(btmPanel, BorderLayout.SOUTH);
+	    
+	    scroller.setSize(100, HEIGHT);
+	    scroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 	}
 
 
@@ -59,6 +62,9 @@ public class DrawTest extends JFrame implements ActionListener {
 		theTrain.addCarriage(testLoco);
 		theTrain.addCarriage(testPass);
 		theTrain.addCarriage(testPass2);
+		theTrain.addCarriage(testPass);
+		theTrain.addCarriage(testFreight);
+		theTrain.addCarriage(testFreight);
 		theTrain.addCarriage(testFreight);
 		
 	}
@@ -70,7 +76,7 @@ public class DrawTest extends JFrame implements ActionListener {
 
 		  if (buttonString.equals("Gen Train")) {
 			  theGraphics.SetTrain(theTrain);
-			  theGraphics.repaint();
+			  //theGraphics.repaint();
 		  } else {
 			  System.err.println("Unexpected Error");
 		  }
