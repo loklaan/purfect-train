@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.border.*;
 
+import asgn2RollingStock.Locomotive;
+
 /**
  * @author Lochlan Bunn - 8509719
  * @author Murray Coggan - 8291951
@@ -32,8 +34,10 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private JPanel optionPanelPassengerCar;
 	private JPanel optionPanelFreightCar;
 	private JPanel panelDriver;
-	private final String carriageTypes[] = { "Locomotive", "Passenger Car",
+	private final String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
+
+	private JPanel panelGroupCarriageTypeOptions;
 
 	/**
 	 * @param title
@@ -158,51 +162,52 @@ public class ControlPanel extends JFrame implements ActionListener {
 		setDefaultControlPanelConstraints(constraints);
 
 		// Panel for grouping carriage options
-		JPanel panelGroupCarriageOptions = createDefaultControlPanel("Add carriage");
-		panelGroupCarriageOptions.setLayout(new GridBagLayout());
-		addToPanel(panel, panelGroupCarriageOptions, constraints, 0, 0, 1, 1);
+		JPanel panelGroupAddCarriageOptions = createDefaultControlPanel("Add carriage");
+		panelGroupAddCarriageOptions.setLayout(new GridBagLayout());
+		addToPanel(panel, panelGroupAddCarriageOptions, constraints, 0, 0, 1, 1);
 
 		// Set carriage weight label
 		JLabel setCarriageWeightLabel = new JLabel("Carriage weight:");
 		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(panelGroupCarriageOptions, setCarriageWeightLabel,
+		addToPanel(panelGroupAddCarriageOptions, setCarriageWeightLabel,
 				constraints, 0, 0, 1, 1);
 
 		// Set carriage weight field
 		JTextField setCarriageWeightField = new JTextField();
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panelGroupCarriageOptions, setCarriageWeightField,
+		addToPanel(panelGroupAddCarriageOptions, setCarriageWeightField,
 				constraints, 1, 0, 1, 1);
 		setCarriageWeightField.setColumns(4);
 
 		// Add carriage type label
 		JLabel addCarriageLabel = new JLabel("Carriage type:");
 		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(panelGroupCarriageOptions, addCarriageLabel, constraints, 0,
+		addToPanel(panelGroupAddCarriageOptions, addCarriageLabel, constraints, 0,
 				1, 1, 1);
 
 		// Add carriage type combobox with all carriage types
-		JComboBox<String> addCarriageComboBox = new JComboBox<String>();
-		for (int i = 0; i < carriageTypes.length; i++) {
-			addCarriageComboBox.addItem(carriageTypes[i]);
-		}
+		JComboBox<String> addCarriageComboBox = new JComboBox<String>(
+				carriageTypes);
+		addCarriageComboBox.addActionListener(this);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panelGroupCarriageOptions, addCarriageComboBox, constraints,
+		addToPanel(panelGroupAddCarriageOptions, addCarriageComboBox, constraints,
 				1, 1, 1, 1);
 
 		// Initialises different option panels for carriages. On default, shows
 		// the Locomotive options
+		panelGroupCarriageTypeOptions = new JPanel();
+		constraints.anchor = GridBagConstraints.CENTER;
+		addToPanel(panelGroupAddCarriageOptions, panelGroupCarriageTypeOptions,	constraints, 0, 2, 2, 1);
 		optionPanelLocomotive = createLocomotiveOptionsPanel();
 		optionPanelPassengerCar = createPassengerCarOptionsPanel();
 		optionPanelFreightCar = createFreightCarOptionsPanel();
-		constraints.anchor = GridBagConstraints.CENTER;
-		addToPanel(panelGroupCarriageOptions, optionPanelLocomotive,
-				constraints, 0, 2, 2, 1);
+		panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
+//		addToPanel(panelGroupCarriageTypeOptions, optionPanelLocomotive, constraints, 0, 0, 1, 1);
 
 		// Add carriage to train button
 		JButton addCarriageToTrainButton = new JButton("Add to train");
 		constraints.anchor = GridBagConstraints.CENTER;
-		addToPanel(panelGroupCarriageOptions, addCarriageToTrainButton,
+		addToPanel(panelGroupAddCarriageOptions, addCarriageToTrainButton,
 				constraints, 0, 3, 2, 1);
 
 		// Remove carriage button
@@ -359,8 +364,17 @@ public class ControlPanel extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[0]) {
+			panelGroupCarriageTypeOptions.removeAll();
+			panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
+		} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[1]) {
+			panelGroupCarriageTypeOptions.removeAll();
+			panelGroupCarriageTypeOptions.add(optionPanelPassengerCar);
+		} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[2]) {
+			panelGroupCarriageTypeOptions.removeAll();
+			panelGroupCarriageTypeOptions.add(optionPanelFreightCar);
+		}
+		revalidate();
 	}
 
 	/**
