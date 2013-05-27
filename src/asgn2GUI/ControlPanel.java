@@ -5,6 +5,9 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.border.*;
 
 import asgn2RollingStock.Locomotive;
@@ -95,6 +98,8 @@ public class ControlPanel extends JFrame implements ActionListener {
 		JScrollPane scrollPanel = new JScrollPane(this.trainCanvas);
 
 		scrollPanel.setSize(100, 200);
+		scrollPanel
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		return scrollPanel;
 	}
@@ -106,10 +111,10 @@ public class ControlPanel extends JFrame implements ActionListener {
 	 *            GridBagConstraints object
 	 * @return GridBagConstraints with some modified default values
 	 */
-	private GridBagConstraints setDefaultControlPanelConstraints(
+	private GridBagConstraints defaultControlPanelConstraints(
 			GridBagConstraints constraints) {
 		constraints.fill = GridBagConstraints.NONE;
-		constraints.insets = new Insets(0, 5, 0, 5);
+		constraints.insets = new Insets(0, 5, 3, 5);
 		return constraints;
 	}
 
@@ -121,32 +126,37 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private JPanel createConductorControlPanel() {
 		JPanel panel = createDefaultControlPanel(CONDUCTOR_ROLE);
 		GridBagConstraints constraints = new GridBagConstraints();
-		setDefaultControlPanelConstraints(constraints);
+		constraints = defaultControlPanelConstraints(constraints);
 
 		// Passenger count label
-		JLabel passengerCarMetricsLabel = new JLabel("Passengers:");
-		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 1, 1);
+		JLabel passengerCarMetricsLabel = new JLabel("Passenger Metrics");
+		constraints.anchor = GridBagConstraints.CENTER;
+		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 2, 1);
 
 		// Passenger count
 		JLabel passengerCarMetrics = new JLabel("PEOPLE/SEATS");
-		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panel, passengerCarMetrics, constraints, 1, 0, 1, 1);
+		passengerCarMetrics.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
+		constraints.insets = new Insets(0, 5, 30, 5);
+		addToPanel(panel, passengerCarMetrics, constraints, 0, 1, 2, 1);
 
-		// Add passenger label
-		JLabel addPassengerLabel = new JLabel("Add passengers:");
+		// Panel for grouping passenger addage
+		JPanel panelGroupAddPassenger = createDefaultControlPanel("Add passengers");
+		panelGroupAddPassenger.setLayout(new GridBagLayout());
+		constraints = defaultControlPanelConstraints(constraints);
+		addToPanel(panel, panelGroupAddPassenger, constraints, 0, 2, 1, 1);
+
+		// Add passenger input spinner
+		JSpinner addPassengerSpinner = new JSpinner(new SpinnerNumberModel(
+				9999, null, null, 1));
 		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(panel, addPassengerLabel, constraints, 0, 1, 1, 1);
-
-		// Add passenger input text field
-		JTextField addPassengerField = new JTextField();
-		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panel, addPassengerField, constraints, 1, 1, 1, 1);
-		addPassengerField.setColumns(4);
+		addToPanel(panelGroupAddPassenger, addPassengerSpinner, constraints, 1,
+				2, 1, 1);
 
 		// Add passenger button
 		JButton addPassengerButton = new JButton("Add");
-		addToPanel(panel, addPassengerButton, constraints, 2, 1, 1, 1);
+		constraints.anchor = GridBagConstraints.WEST;
+		addToPanel(panelGroupAddPassenger, addPassengerButton, constraints, 2,
+				2, 1, 1);
 
 		return panel;
 	}
@@ -159,7 +169,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private JPanel createDriverControlPanel() {
 		JPanel panel = createDefaultControlPanel(DRIVER_ROLE);
 		GridBagConstraints constraints = new GridBagConstraints();
-		setDefaultControlPanelConstraints(constraints);
+		constraints = defaultControlPanelConstraints(constraints);
 
 		// Panel for grouping carriage options
 		JPanel panelGroupAddCarriageOptions = createDefaultControlPanel("Add carriage");
@@ -172,37 +182,41 @@ public class ControlPanel extends JFrame implements ActionListener {
 		addToPanel(panelGroupAddCarriageOptions, setCarriageWeightLabel,
 				constraints, 0, 0, 1, 1);
 
-		// Set carriage weight field
-		JTextField setCarriageWeightField = new JTextField();
+		// Set carriage weight spinner
+		JSpinner setCarriageWeightSpinner = new JSpinner(
+				new SpinnerNumberModel(0, null, null, 10));
+		((JSpinner.DefaultEditor) setCarriageWeightSpinner.getEditor())
+				.getTextField().setColumns(3);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panelGroupAddCarriageOptions, setCarriageWeightField,
+		addToPanel(panelGroupAddCarriageOptions, setCarriageWeightSpinner,
 				constraints, 1, 0, 1, 1);
-		setCarriageWeightField.setColumns(4);
 
 		// Add carriage type label
 		JLabel addCarriageLabel = new JLabel("Carriage type:");
 		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(panelGroupAddCarriageOptions, addCarriageLabel, constraints, 0,
-				1, 1, 1);
+		addToPanel(panelGroupAddCarriageOptions, addCarriageLabel, constraints,
+				0, 1, 1, 1);
 
 		// Add carriage type combobox with all carriage types
 		JComboBox<String> addCarriageComboBox = new JComboBox<String>(
 				carriageTypes);
 		addCarriageComboBox.addActionListener(this);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panelGroupAddCarriageOptions, addCarriageComboBox, constraints,
-				1, 1, 1, 1);
+		addToPanel(panelGroupAddCarriageOptions, addCarriageComboBox,
+				constraints, 1, 1, 1, 1);
 
 		// Initialises different option panels for carriages. On default, shows
 		// the Locomotive options
 		panelGroupCarriageTypeOptions = new JPanel();
 		constraints.anchor = GridBagConstraints.CENTER;
-		addToPanel(panelGroupAddCarriageOptions, panelGroupCarriageTypeOptions,	constraints, 0, 2, 2, 1);
+		addToPanel(panelGroupAddCarriageOptions, panelGroupCarriageTypeOptions,
+				constraints, 0, 2, 2, 1);
 		optionPanelLocomotive = createLocomotiveOptionsPanel();
 		optionPanelPassengerCar = createPassengerCarOptionsPanel();
 		optionPanelFreightCar = createFreightCarOptionsPanel();
 		panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
-//		addToPanel(panelGroupCarriageTypeOptions, optionPanelLocomotive, constraints, 0, 0, 1, 1);
+		// addToPanel(panelGroupCarriageTypeOptions, optionPanelLocomotive,
+		// constraints, 0, 0, 1, 1);
 
 		// Add carriage to train button
 		JButton addCarriageToTrainButton = new JButton("Add to train");
@@ -226,7 +240,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 		JPanel optionsPanel = createDefaultControlPanel("Locomotive");
 		optionsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		setDefaultControlPanelConstraints(constraints);
+		constraints = defaultControlPanelConstraints(constraints);
 
 		// Set locomotive engine label
 		JLabel setLocomotiveEngineLabel = new JLabel("Engine Type:");
@@ -234,24 +248,33 @@ public class ControlPanel extends JFrame implements ActionListener {
 		addToPanel(optionsPanel, setLocomotiveEngineLabel, constraints, 0, 0,
 				1, 1);
 
-		// Set locomotive engine field
-		JTextField setLocomotiveEngineField = new JTextField();
+		// Set locomotive engine spinner
+		JSpinner setLocomotiveEngineSpinner = new JSpinner(
+				new SpinnerListModel(new String[] { "E", "S", "D" }));
+		((JSpinner.DefaultEditor) setLocomotiveEngineSpinner.getEditor())
+				.getTextField().setColumns(3);
+		((JSpinner.DefaultEditor) setLocomotiveEngineSpinner.getEditor())
+				.getTextField().setEditable(false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setLocomotiveEngineField, constraints, 1, 0,
+		addToPanel(optionsPanel, setLocomotiveEngineSpinner, constraints, 1, 0,
 				1, 1);
 
-		setLocomotiveEngineField.setColumns(4);
-		// Set locomotive engine label
+		// Set locomotive power label
 		JLabel setLocomotivePowerLabel = new JLabel("Power Level:");
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(optionsPanel, setLocomotivePowerLabel, constraints, 0, 1, 1,
 				1);
-		// Set locomotive engine field
-		JTextField setLocomotivePowerField = new JTextField();
+
+		// Set locomotive power spinner
+		JSpinner setLocomotivePowerSpinner = new JSpinner(
+				new SpinnerNumberModel(1, 1, 9, 1));
+		((JSpinner.DefaultEditor) setLocomotivePowerSpinner.getEditor())
+				.getTextField().setColumns(3);
+		((JSpinner.DefaultEditor) setLocomotivePowerSpinner.getEditor())
+				.getTextField().setEditable(false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setLocomotivePowerField, constraints, 1, 1, 1,
-				1);
-		setLocomotivePowerField.setColumns(4);
+		addToPanel(optionsPanel, setLocomotivePowerSpinner, constraints, 1, 1,
+				1, 1);
 
 		return optionsPanel;
 	}
@@ -265,18 +288,20 @@ public class ControlPanel extends JFrame implements ActionListener {
 		JPanel optionsPanel = createDefaultControlPanel("Passenger Car");
 		optionsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		setDefaultControlPanelConstraints(constraints);
+		constraints = defaultControlPanelConstraints(constraints);
 
 		// Set carriage seats label
 		JLabel setCarriageSeatsLabel = new JLabel("Carriage seats:");
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(optionsPanel, setCarriageSeatsLabel, constraints, 0, 0, 1, 1);
 
-		// Set carriage seats field
-		JTextField setCarriageSeatsField = new JTextField();
+		// Set carriage seats spinner
+		JSpinner setCarriageSeatsSpinner = new JSpinner(
+				new SpinnerNumberModel(0, null, null, 1));
+		((JSpinner.DefaultEditor) setCarriageSeatsSpinner.getEditor())
+				.getTextField().setColumns(3);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setCarriageSeatsField, constraints, 1, 0, 1, 1);
-		setCarriageSeatsField.setColumns(4);
+		addToPanel(optionsPanel, setCarriageSeatsSpinner, constraints, 1, 0, 1, 1);
 
 		return optionsPanel;
 	}
@@ -290,18 +315,22 @@ public class ControlPanel extends JFrame implements ActionListener {
 		JPanel optionsPanel = createDefaultControlPanel("Freight Car");
 		optionsPanel.setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
-		setDefaultControlPanelConstraints(constraints);
+		constraints = defaultControlPanelConstraints(constraints);
 
 		// Set freight type label
 		JLabel setFreightTypeLabel = new JLabel("Freight type:");
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(optionsPanel, setFreightTypeLabel, constraints, 0, 0, 1, 1);
 
-		// Set freight type field
-		JTextField setFreightTypeField = new JTextField();
+		// Set freight type spinner
+		JSpinner setFreightTypeSpinner = new JSpinner(
+				new SpinnerListModel(new String[] { "G", "R", "D" }));
+		((JSpinner.DefaultEditor) setFreightTypeSpinner.getEditor())
+				.getTextField().setColumns(3);
+		((JSpinner.DefaultEditor) setFreightTypeSpinner.getEditor())
+				.getTextField().setEditable(false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setFreightTypeField, constraints, 1, 0, 1, 1);
-		setFreightTypeField.setColumns(4);
+		addToPanel(optionsPanel, setFreightTypeSpinner, constraints, 1, 0, 1, 1);
 
 		return optionsPanel;
 	}
