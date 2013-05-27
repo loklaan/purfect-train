@@ -35,9 +35,9 @@ public class ControlPanel extends JFrame implements ActionListener {
 	 */
 	public ControlPanel(String title) throws HeadlessException {
 		super(title);
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		try { // Native look and feel
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
@@ -75,10 +75,11 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private JScrollPane createTrainCanvas() {
 		this.trainCanvas = new TrainDraw();
 		JScrollPane scrollPanel = new JScrollPane(this.trainCanvas);
-		
+
 		scrollPanel.setSize(100, 200);
-		scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		
+		scrollPanel
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
 		return scrollPanel;
 	}
 
@@ -97,27 +98,54 @@ public class ControlPanel extends JFrame implements ActionListener {
 		constraints.weighty = 1;
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 1, 1);
-		
+
 		// Passenger count
 		JLabel passengerCarMetrics = new JLabel("PEOPLE/SEATS");
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(panel, passengerCarMetrics, constraints, 1, 0, 1, 1);
-		
+
 		// Add passenger label
 		JLabel addPassengerLabel = new JLabel("Add passengers:");
 		addPassengerLabel.setFont(new Font("Sans Serif", Font.BOLD, 12));
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(panel, addPassengerLabel, constraints, 0, 2, 1, 1);
-		
+
 		// Add passenger input text field
 		JTextField addPassengerField = new JTextField();
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(panel, addPassengerField, constraints, 1, 2, 1, 1);
 		addPassengerField.setColumns(4);
-		
+
 		// Add passenger button
 		JButton addPassengerButton = new JButton("Add");
 		addToPanel(panel, addPassengerButton, constraints, 2, 2, 1, 1);
+
+		return panel;
+	}
+
+	private JPanel createDriverControlPanel() {
+		JPanel panel = createDefaultControlPanel(DRIVER_ROLE);
+		GridBagConstraints constraints = new GridBagConstraints();
+
+		// Default constraints
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.insets = new Insets(0, 5, 0, 5);
+
+		// Remove carriage button
+		JButton removeCarriageButton = new JButton("Remove last carriage");
+		addToPanel(panel, removeCarriageButton, constraints, 0, 0, 2, 1);
+
+		// Add carriage label
+		JLabel addCarriageLabel = new JLabel("Add carriage:");
+		constraints.anchor = GridBagConstraints.EAST;
+		addToPanel(panel, addCarriageLabel, constraints, 0, 1, 1, 1);
+
+		// Add carriage combobox
+		JComboBox<String> addCarriageComboBox = new JComboBox<String>();
+		String carriages[] = { "Locomotive", "Passenger Car", "Freight Car" };
+		addCarriageComboBox.addItem(carriages[0]);
+		constraints.anchor = GridBagConstraints.WEST;
+		addToPanel(panel, addCarriageComboBox, constraints, 1, 1, 1, 1);
 
 		return panel;
 	}
@@ -129,12 +157,6 @@ public class ControlPanel extends JFrame implements ActionListener {
 		constraints.gridwidth = w;
 		constraints.gridheight = h;
 		panel.add(component, constraints);
-	}
-
-	private JPanel createDriverControlPanel() {
-		JPanel panel = createDefaultControlPanel(DRIVER_ROLE);
-
-		return panel;
 	}
 
 	/**
