@@ -122,6 +122,14 @@ public class TrainDraw extends JPanel {
 		g.setColor(Color.RED);
 		g.drawRect(drawPos, CARRIAGE_HEIGHT + barOffset, weightBarLength, barHeight);
 		g.fillRect(drawPos, CARRIAGE_HEIGHT + barOffset, weightBarLength, barHeight);
+		//draw the weight and power in the format weight/power on the side of the train
+		g.setColor(Color.BLACK);
+		String tempWeightPower = (totalWeight + "/" + theLoco.power());
+		FontMetrics fm = g.getFontMetrics();
+		int stringWOffset = (fm.stringWidth(tempWeightPower)/2);
+		int stringHOffset = 4;
+		g.drawString(tempWeightPower, drawPos + (CARRIAGE_WIDTH/2) - stringWOffset,
+				(CARRIAGE_HEIGHT/2) + stringHOffset);
 	}
 	
 	
@@ -139,16 +147,21 @@ public class TrainDraw extends JPanel {
 		g.setColor(Color.YELLOW);
 		g.drawRect(drawPos, 0, CARRIAGE_WIDTH, CARRIAGE_HEIGHT);
 		g.fillRect(drawPos, 0, CARRIAGE_WIDTH, CARRIAGE_HEIGHT);
+		// Draw the number of passengers and the weight of the car on the side of the carriage
 		PassengerCar tempCarriage = thePassenger;
 		String tempPassengers = tempCarriage.numberOnBoard() + "/" + tempCarriage.numberOfSeats();
 		g.setColor(Color.BLACK);
+		String tempWeight = "" + thePassenger.getGrossWeight();
 		// Uses FontMetrics to get half of the width
 		// of the passengers string for formatting
 		FontMetrics fm = g.getFontMetrics();
-		int stringWOffset = (fm.stringWidth(tempPassengers)/2);
+		int stringWOffset = (fm.stringWidth(tempWeight)/2);
 		int stringHOffset = 4;
+		g.drawString(tempWeight, drawPos + (CARRIAGE_WIDTH/2) - stringWOffset,
+				(CARRIAGE_HEIGHT/2) - fm.getHeight() + stringHOffset*3);
+		stringWOffset = (fm.stringWidth(tempPassengers)/2);
 		g.drawString(tempPassengers, drawPos + (CARRIAGE_WIDTH/2) - stringWOffset,
-				(CARRIAGE_HEIGHT/2) + stringHOffset);
+				(CARRIAGE_HEIGHT/2) + stringHOffset*2);
 	}
 	
 	
@@ -162,6 +175,14 @@ public class TrainDraw extends JPanel {
 		g.setColor(Color.GREEN);
 		g.drawRect(drawPos, 0, CARRIAGE_WIDTH, CARRIAGE_HEIGHT);
 		g.fillRect(drawPos, 0, CARRIAGE_WIDTH, CARRIAGE_HEIGHT);
+		// Draw the goods and weight of the freight car on the side of the carriage
+		g.setColor(Color.BLACK);
+		String tempGoodsWeight = theFreight.goodsType() + " " + theFreight.getGrossWeight();
+		FontMetrics fm = g.getFontMetrics();
+		int stringWOffset = (fm.stringWidth(tempGoodsWeight)/2);
+		int stringHOffset = 4;
+		g.drawString(tempGoodsWeight, drawPos + (CARRIAGE_WIDTH/2) - stringWOffset,
+				(CARRIAGE_HEIGHT/2) + stringHOffset);
 	}
 	
 	
