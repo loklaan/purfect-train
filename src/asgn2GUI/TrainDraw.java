@@ -16,8 +16,6 @@ import asgn2Train.DepartingTrain;
  */
 
 public class TrainDraw extends JPanel {
-	final static int WIDTH = 500;
-	final static int HEIGHT = 200;
 	final int CARRIAGE_HEIGHT = 50;
 	final int CARRIAGE_WIDTH = 100;
 	// distance used to iterate drawPos, will make carriages
@@ -55,11 +53,13 @@ public class TrainDraw extends JPanel {
 	public void SetTrain(DepartingTrain theTrain){
 		this.theTrain = theTrain;
 		RollingStock tempCar = theTrain.firstCarriage();
+		int tempNoCars = 1;
 		while(tempCar != null){
 			totalWeight += tempCar.getGrossWeight();
 			tempCar = theTrain.nextCarriage();
+			tempNoCars ++;
 		}
-		
+		this.setSize(tempNoCars*DISTANCE, 150);
 	}
 	
 	/**
@@ -122,9 +122,12 @@ public class TrainDraw extends JPanel {
 		g.setColor(Color.RED);
 		g.drawRect(drawPos, CARRIAGE_HEIGHT + barOffset, weightBarLength, barHeight);
 		g.fillRect(drawPos, CARRIAGE_HEIGHT + barOffset, weightBarLength, barHeight);
+		
 		//draw the weight and power in the format weight/power on the side of the train
 		g.setColor(Color.BLACK);
 		String tempWeightPower = (totalWeight + "/" + theLoco.power());
+		// Uses FontMetrics to get half of the width
+		// of the passengers string for formatting
 		FontMetrics fm = g.getFontMetrics();
 		int stringWOffset = (fm.stringWidth(tempWeightPower)/2);
 		int stringHOffset = 4;
@@ -148,12 +151,9 @@ public class TrainDraw extends JPanel {
 		g.drawRect(drawPos, 0, CARRIAGE_WIDTH, CARRIAGE_HEIGHT);
 		g.fillRect(drawPos, 0, CARRIAGE_WIDTH, CARRIAGE_HEIGHT);
 		// Draw the number of passengers and the weight of the car on the side of the carriage
-		PassengerCar tempCarriage = thePassenger;
-		String tempPassengers = tempCarriage.numberOnBoard() + "/" + tempCarriage.numberOfSeats();
+		String tempPassengers = thePassenger.numberOnBoard() + "/" + thePassenger.numberOfSeats();
 		g.setColor(Color.BLACK);
 		String tempWeight = "" + thePassenger.getGrossWeight();
-		// Uses FontMetrics to get half of the width
-		// of the passengers string for formatting
 		FontMetrics fm = g.getFontMetrics();
 		int stringWOffset = (fm.stringWidth(tempWeight)/2);
 		int stringHOffset = 4;
@@ -185,5 +185,8 @@ public class TrainDraw extends JPanel {
 				(CARRIAGE_HEIGHT/2) + stringHOffset);
 	}
 	
+	public Dimension getPreferredSize(){
+		return new Dimension(this.getWidth(), this.getHeight());
+	}
 	
 }
