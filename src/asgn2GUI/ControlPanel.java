@@ -9,8 +9,11 @@ import java.awt.event.*;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
@@ -22,7 +25,6 @@ import javax.swing.border.Border;
  */
 public class ControlPanel extends JFrame implements ActionListener {
 
-
 	private static final long serialVersionUID = -1139433227864661487L;
 
 	// CONSTANTS
@@ -33,6 +35,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 	final String CONDUCTOR_ROLE = "Train Conductor";
 
 	// FIELDS
+	private JPanel panelControls;
 	private JScrollPane panelTrain;
 	private JPanel panelConductor;
 	private JPanel panelDriver;
@@ -43,7 +46,9 @@ public class ControlPanel extends JFrame implements ActionListener {
 	 */
 	public ControlPanel(String title) throws HeadlessException {
 		super(title);
-
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		try { // Native look and feel
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
@@ -57,27 +62,80 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private void createGUI() {
 		this.setSize(WIDTH, HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLayout(new BorderLayout());		
+		this.setLayout(new BorderLayout());
 
-//		this.panelTrain = createTrainCanvas();
-//		this.getContentPane().add(panelTrain, BorderLayout.NORTH);
+		// needs to split center control area in two
+		this.panelControls = new JPanel();
+		this.getContentPane().add(panelControls, BorderLayout.CENTER);
+		panelControls.setLayout(new GridLayout());
 
+		// TODO fill this
+		this.panelTrain = createTrainCanvas();
+		this.getContentPane().add(panelTrain, BorderLayout.NORTH);
+
+		// control panels for Driver / Conductor
 		this.panelDriver = createDriverControlPanel();
-		this.getContentPane().add(panelDriver, BorderLayout.CENTER);
-
+		panelControls.add(panelDriver);
 		this.panelConductor = createConductorControlPanel();
-		this.getContentPane().add(panelConductor, BorderLayout.EAST);
-		
+		panelControls.add(panelConductor);
+
 		// end of method
 		repaint();
 	}
 
+	private JScrollPane createTrainCanvas() {
+		// TODO add some display thing
+		JScrollPane panel = new JScrollPane();
+		return panel;
+	}
+
 	private JPanel createConductorControlPanel() {
 		JPanel panel = createDefaultControlPanel(CONDUCTOR_ROLE);
-		JButton button = new JButton("Gay Button");
-		panel.add(button);
+		GridBagConstraints constraints = new GridBagConstraints();
+
+		// Default constraints
+		constraints.fill = GridBagConstraints.NONE;
+		constraints.insets = new Insets(0, 5, 0, 5);
+
+		// Passenger count label
+		JLabel passengerCarMetricsLabel = new JLabel("Passengers:");
+		passengerCarMetricsLabel.setFont(new Font("Sans Serif", Font.BOLD, 12));
+		constraints.weightx = 1;
+		constraints.weighty = 1;
+		constraints.anchor = GridBagConstraints.EAST;
+		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 1, 1);
+		
+		// Passenger count
+		JLabel passengerCarMetrics = new JLabel("PEOPLE/SEATS");
+		constraints.anchor = GridBagConstraints.WEST;
+		addToPanel(panel, passengerCarMetrics, constraints, 1, 0, 1, 1);
+		
+		// Add passenger label
+		JLabel addPassengerLabel = new JLabel("Add passengers:");
+		addPassengerLabel.setFont(new Font("Sans Serif", Font.BOLD, 12));
+		constraints.anchor = GridBagConstraints.EAST;
+		addToPanel(panel, addPassengerLabel, constraints, 0, 2, 1, 1);
+		
+		// Add passenger input text field
+		JTextField addPassengerField = new JTextField();
+		constraints.anchor = GridBagConstraints.WEST;
+		addToPanel(panel, addPassengerField, constraints, 1, 2, 1, 1);
+		addPassengerField.setColumns(4);
+		
+		// Add passenger button
+		JButton addPassengerButton = new JButton("Add");
+		addToPanel(panel, addPassengerButton, constraints, 2, 2, 1, 1);
 
 		return panel;
+	}
+
+	private void addToPanel(JPanel panel, Component component,
+			GridBagConstraints constraints, int x, int y, int w, int h) {
+		constraints.gridx = x;
+		constraints.gridy = y;
+		constraints.gridwidth = w;
+		constraints.gridheight = h;
+		panel.add(component, constraints);
 	}
 
 	private JPanel createDriverControlPanel() {
