@@ -1,22 +1,10 @@
-/**
- * 
- */
 package asgn2GUI;
 
 import java.awt.*;
-import java.awt.event.*;
+import javax.swing.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
+import java.awt.event.*;
+import javax.swing.border.*;
 
 /**
  * @author Lochlan Bunn - 8509719
@@ -36,9 +24,10 @@ public class ControlPanel extends JFrame implements ActionListener {
 
 	// FIELDS
 	private JPanel panelControls;
-	private JScrollPane panelTrain;
 	private JPanel panelConductor;
 	private JPanel panelDriver;
+	private JScrollPane panelTrain;
+	private TrainDraw trainCanvas;
 
 	/**
 	 * @param title
@@ -66,12 +55,12 @@ public class ControlPanel extends JFrame implements ActionListener {
 
 		// needs to split center control area in two
 		this.panelControls = new JPanel();
-		this.getContentPane().add(panelControls, BorderLayout.CENTER);
+		this.getContentPane().add(panelControls, BorderLayout.SOUTH);
 		panelControls.setLayout(new GridLayout());
 
 		// TODO fill this
 		this.panelTrain = createTrainCanvas();
-		this.getContentPane().add(panelTrain, BorderLayout.NORTH);
+		this.getContentPane().add(panelTrain, BorderLayout.CENTER);
 
 		// control panels for Driver / Conductor
 		this.panelDriver = createDriverControlPanel();
@@ -84,9 +73,13 @@ public class ControlPanel extends JFrame implements ActionListener {
 	}
 
 	private JScrollPane createTrainCanvas() {
-		// TODO add some display thing
-		JScrollPane panel = new JScrollPane();
-		return panel;
+		this.trainCanvas = new TrainDraw();
+		JScrollPane scrollPanel = new JScrollPane(this.trainCanvas);
+		
+		scrollPanel.setSize(100, 200);
+		scrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		
+		return scrollPanel;
 	}
 
 	private JPanel createConductorControlPanel() {
