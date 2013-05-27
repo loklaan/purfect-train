@@ -133,7 +133,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 
 		// Remove carriage button
 		JButton removeCarriageButton = new JButton("Remove last carriage");
-		addToPanel(panel, removeCarriageButton, constraints, 0, 0, 2, 1);
+		addToPanel(panel, removeCarriageButton, constraints, 0, 0, 3, 1);
 
 		// Add carriage label
 		JLabel addCarriageLabel = new JLabel("Add carriage:");
@@ -146,6 +146,27 @@ public class ControlPanel extends JFrame implements ActionListener {
 		addCarriageComboBox.addItem(carriages[0]);
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(panel, addCarriageComboBox, constraints, 1, 1, 1, 1);
+		
+		// Set carriage weight label
+		JLabel setCarriageWeightLabel = new JLabel("Carriage weight:");
+		constraints.anchor = GridBagConstraints.EAST;
+		addToPanel(panel, setCarriageWeightLabel, constraints, 0, 2, 1, 1);
+		
+		// Set carriage weight field
+		JTextField setCarriageWeightField = new JTextField();
+		constraints.anchor = GridBagConstraints.WEST;
+		addToPanel(panel, setCarriageWeightField, constraints, 1, 2, 1, 1);
+		setCarriageWeightField.setColumns(4);
+
+		// Set carriage weight button
+		JButton setCarriageWeightButton = new JButton("Add");
+		addToPanel(panel, setCarriageWeightButton, constraints, 2, 2, 1, 1);
+		
+		// Add carriage to train button
+		JButton addCarriageToTrainButton = new JButton("Add to train");
+		constraints.anchor = GridBagConstraints.CENTER;
+		addToPanel(panel, addCarriageToTrainButton, constraints, 0, 3, 3, 1);
+		
 
 		return panel;
 	}
