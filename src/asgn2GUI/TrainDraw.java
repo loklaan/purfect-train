@@ -16,6 +16,8 @@ import asgn2Train.DepartingTrain;
  */
 
 public class TrainDraw extends JPanel {
+	private static final long serialVersionUID = -4580186180750958335L;
+	
 	final int CARRIAGE_HEIGHT = 50;
 	final int CARRIAGE_WIDTH = 100;
 	// distance used to iterate drawPos, will make carriages
@@ -24,7 +26,6 @@ public class TrainDraw extends JPanel {
 	final int DEFAULT_DRAW_POS = 10;
 	private int drawPos = 10;
 	private static DepartingTrain theTrain;
-	private static Graphics graphics;
 	private int totalWeight;
 	
 	
