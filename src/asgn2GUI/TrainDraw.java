@@ -21,7 +21,8 @@ public class TrainDraw extends JPanel {
 	// distance used to iterate drawPos, will make carriages
 	// draw 10 pixels apart from each other
 	final int DISTANCE = CARRIAGE_WIDTH + 10;
-	private int drawPos = 0;
+	final int DEFAULT_DRAW_POS = 10;
+	private int drawPos = 10;
 	private static DepartingTrain theTrain;
 	private static Graphics graphics;
 	private int totalWeight;
@@ -53,13 +54,15 @@ public class TrainDraw extends JPanel {
 	public void SetTrain(DepartingTrain theTrain){
 		this.theTrain = theTrain;
 		RollingStock tempCar = theTrain.firstCarriage();
-		int tempNoCars = 1;
+		int tempNoCars = 0;
 		while(tempCar != null){
 			totalWeight += tempCar.getGrossWeight();
 			tempCar = theTrain.nextCarriage();
 			tempNoCars ++;
 		}
-		this.setSize(tempNoCars*DISTANCE, 150);
+		// Sets the width of the panel to the length of the train, plus padding
+		this.setSize((tempNoCars*DISTANCE) + DEFAULT_DRAW_POS, 150);
+		repaint();
 	}
 	
 	/**
@@ -82,7 +85,7 @@ public class TrainDraw extends JPanel {
 			drawPos += DISTANCE;
 			currentCar = theTrain.nextCarriage();
 		}
-		drawPos = 0;
+		drawPos = DEFAULT_DRAW_POS;
 	}
 	
 	
@@ -185,6 +188,11 @@ public class TrainDraw extends JPanel {
 				(CARRIAGE_HEIGHT/2) + stringHOffset);
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#getPreferredSize()
+	 * 
+	 * Used by the JScrollPane to get the size of this panel, enables scrollbars
+	 */
 	public Dimension getPreferredSize(){
 		return new Dimension(this.getWidth(), this.getHeight());
 	}

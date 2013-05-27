@@ -36,7 +36,7 @@ public class DrawTest extends JFrame implements ActionListener {
 	    btmPanel = new JPanel();
 	    btmPanel.setBackground(Color.LIGHT_GRAY);
         btmPanel.setLayout(new FlowLayout());
-
+        
 	    JButton loadButton = new JButton("Gen Train");
 	    loadButton.setBackground(Color.WHITE);
 	    loadButton.addActionListener(this);
