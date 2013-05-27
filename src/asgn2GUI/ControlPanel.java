@@ -5,12 +5,13 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.border.*;
 
-import asgn2RollingStock.Locomotive;
+import asgn2Exceptions.TrainException;
+import asgn2RollingStock.*;
+import asgn2Train.DepartingTrain;
 
 /**
  * @author Lochlan Bunn - 8509719
@@ -29,6 +30,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 	final String CONDUCTOR_ROLE = "Train Conductor";
 
 	// FIELDS
+	private DepartingTrain train;
 	private JScrollPane panelTrain;
 	private TrainDraw trainCanvas;
 	private JPanel panelControls;
@@ -37,10 +39,10 @@ public class ControlPanel extends JFrame implements ActionListener {
 	private JPanel optionPanelPassengerCar;
 	private JPanel optionPanelFreightCar;
 	private JPanel panelDriver;
+	private JPanel panelGroupCarriageTypeOptions;
 	private final String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
 
-	private JPanel panelGroupCarriageTypeOptions;
 
 	/**
 	 * @param title
@@ -59,6 +61,30 @@ public class ControlPanel extends JFrame implements ActionListener {
 		}
 
 		createGUI();
+		try {
+			createTrain();
+		} catch (TrainException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void createTrain() throws TrainException {
+		train = new DepartingTrain();
+	}
+	
+	private void updateTrainFake() throws TrainException {
+		Locomotive testLoco = new Locomotive(200, "5E");
+		PassengerCar testPass = new PassengerCar(100, 20);
+		PassengerCar testPass2 = new PassengerCar(10, 400);
+		FreightCar testFreight = new FreightCar(10, "D");
+		train.addCarriage(testLoco);
+		train.addCarriage(testPass);
+		train.addCarriage(testPass2);
+		train.addCarriage(testPass);
+		train.addCarriage(testFreight);
+		train.addCarriage(testFreight);
+		train.addCarriage(testFreight);
 	}
 
 	/**
@@ -220,6 +246,7 @@ public class ControlPanel extends JFrame implements ActionListener {
 
 		// Add carriage to train button
 		JButton addCarriageToTrainButton = new JButton("Add to train");
+		addCarriageToTrainButton.addActionListener(this);
 		constraints.anchor = GridBagConstraints.CENTER;
 		addToPanel(panelGroupAddCarriageOptions, addCarriageToTrainButton,
 				constraints, 0, 3, 2, 1);
@@ -393,15 +420,26 @@ public class ControlPanel extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[0]) {
-			panelGroupCarriageTypeOptions.removeAll();
-			panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
-		} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[1]) {
-			panelGroupCarriageTypeOptions.removeAll();
-			panelGroupCarriageTypeOptions.add(optionPanelPassengerCar);
-		} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[2]) {
-			panelGroupCarriageTypeOptions.removeAll();
-			panelGroupCarriageTypeOptions.add(optionPanelFreightCar);
+		if (e.getSource() instanceof JComboBox) {
+			if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[0]) {
+				panelGroupCarriageTypeOptions.removeAll();
+				panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
+			} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[1]) {
+				panelGroupCarriageTypeOptions.removeAll();
+				panelGroupCarriageTypeOptions.add(optionPanelPassengerCar);
+			} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[2]) {
+				panelGroupCarriageTypeOptions.removeAll();
+				panelGroupCarriageTypeOptions.add(optionPanelFreightCar);
+			}
+		}
+		if (e.getSource() instanceof JButton) {
+			try {
+				updateTrainFake();
+				trainCanvas.SetTrain(train);
+			} catch (TrainException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		revalidate();
 	}
