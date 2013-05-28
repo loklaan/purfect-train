@@ -280,7 +280,7 @@ public class ControlPanelView extends JFrame {
 	 *            Instance of the action listener to be used (which handles the
 	 *            events)
 	 */
-	protected void add(ActionListener listener) {
+	protected void addAddCarriageListener(ActionListener listener) {
 		this.addCarriageToTrainButton.addActionListener(listener);
 	}
 
