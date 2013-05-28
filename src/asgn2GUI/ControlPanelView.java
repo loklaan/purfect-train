@@ -9,7 +9,7 @@ import java.awt.event.*;
 import javax.swing.border.*;
 
 /**
- * View class for
+ * View class for the GUI of Control Panel. Uses Swing.
  * 
  * @author Lochlan Bunn - 8509719
  * @author Murray Coggan - 8291951
@@ -461,18 +461,38 @@ public class ControlPanelView extends JFrame {
 		this.panelCarriageTypeOptions.add(optionsPanel);
 	}
 
+	/**
+	 * Returns the selected carriage type in the Drivers control panel.
+	 * 
+	 * @return String of the selected item.
+	 */
 	protected String getSelectedCarriageType() {
 		return this.carriageComboBox.getSelectedItem().toString();
 	}
+	
+	private JOptionPane createMessageDialog(String message, int messageType) {
+		JOptionPane dialog = new JOptionPane(message, messageType);
+		return dialog;
+	}
 
 	/**
-	 * Call to throw message dialog
+	 * Call to throw warning message dialog
 	 * 
 	 * @param message
 	 *            Message string to be shown
 	 */
 	protected void throwWarning(String message) {
-		JOptionPane.showMessageDialog(this, message);
+		createMessageDialog(message, JOptionPane.WARNING_MESSAGE);
+	}
+	
+	/**
+	 * Call to throw error message dialog
+	 * 
+	 * @param message
+	 *            Message string to be shown
+	 */
+	protected void throwError(String message) {
+		createMessageDialog(message, JOptionPane.ERROR_MESSAGE);
 	}
 
 	// GETTERS FOR FIELDS
