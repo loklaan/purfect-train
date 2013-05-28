@@ -17,13 +17,24 @@ import javax.swing.border.*;
  */
 public class ControlPanelView extends JFrame {
 
-	private static final long serialVersionUID = -1139433227864661487L;
+	private static final long serialVersionUID = -6139164914979621928L;
 
 	// CONSTANTS
-	private final int WIDTH = 700;
-	private final int HEIGHT = 500;
+	final int WIDTH = 700;
+	final int HEIGHT = 500;
 	final String DRIVER_ROLE = "Train Driver";
 	final String CONDUCTOR_ROLE = "Train Conductor";
+	final int DEFAULT_SPINNER_COLUMNS = 3;
+	final String[] FREIGHT_VALID_TYPES = { "G", "R", "D" };
+	final int DEFAULT_PASSENGER_CAR_SEATS_INCREMENT = 1;
+	final int DEFAULT_PASSENGER_CAR_SEATS = 0;
+	final String[] LOCOMOTIVE_VALID_ENGINE_TYPES = { "E", "S", "D" };
+	final int DEFAULT_CARRIAGE_WEIGHT_INCREMENT = 10;
+	final int DEFAULT_CARRIAGE_WEIGHT = 10;
+	final int DEFAULT_PASSENGER_INCREMENT = 1;
+	final int DEFAULT_PASSENGER_AMOUNT = 0;
+	final String CONTROL_PANEL_ERROR = "Control Panel: Error";
+	final String CONTROL_PANEL_WARNING = "Control Panel: Warning";
 
 	// FIELDS
 	private JScrollPane panelTrain;
@@ -39,16 +50,24 @@ public class ControlPanelView extends JFrame {
 	private String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
 
-	// TODO refactor rename and comment enum
-	enum carriageTypeIndex {
+	/**
+	 * index for carriageTypes
+	 * 
+	 */
+	enum CarriageTypeIndex {
 		LOCOMOTIVE(0), PASSENGER_CAR(1), FREIGHT_CAR(2);
 
 		private final int value;
 
-		private carriageTypeIndex(int value) {
+		private CarriageTypeIndex(int value) {
 			this.value = value;
 		}
 
+		/**
+		 * Returns the int of the enum type.
+		 * 
+		 * @return int of the enum type
+		 */
 		public int getValue() {
 			return value;
 		}
@@ -80,6 +99,7 @@ public class ControlPanelView extends JFrame {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+			// breaks if on an unsupported system
 			e.printStackTrace();
 		}
 
@@ -170,8 +190,10 @@ public class ControlPanelView extends JFrame {
 		addToPanel(panel, panelGroupAddPassenger, constraints, 0, 2, 1, 1);
 
 		// Add passenger input spinner
-		addPassengerSpinner = new JSpinner(new SpinnerNumberModel(9999, null,
-				null, 1));
+		addPassengerSpinner = new JSpinner(new SpinnerNumberModel(
+				DEFAULT_PASSENGER_AMOUNT, null, null,
+				DEFAULT_PASSENGER_INCREMENT));
+		setSpinnerColumns(addPassengerSpinner, DEFAULT_SPINNER_COLUMNS);
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(panelGroupAddPassenger, addPassengerSpinner, constraints, 1,
 				2, 1, 1);
@@ -218,10 +240,10 @@ public class ControlPanelView extends JFrame {
 				constraints, 0, 0, 1, 1);
 
 		// Set carriage weight spinner
-		carriageWeightSpinner = new JSpinner(new SpinnerNumberModel(0, null,
-				null, 10));
-		((JSpinner.DefaultEditor) carriageWeightSpinner.getEditor())
-				.getTextField().setColumns(3);
+		carriageWeightSpinner = new JSpinner(new SpinnerNumberModel(
+				DEFAULT_CARRIAGE_WEIGHT, null, null,
+				DEFAULT_CARRIAGE_WEIGHT_INCREMENT));
+		setSpinnerColumns(carriageWeightSpinner, DEFAULT_SPINNER_COLUMNS);
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(panelGroupAddCarriageOptions, carriageWeightSpinner,
 				constraints, 1, 0, 1, 1);
@@ -238,8 +260,7 @@ public class ControlPanelView extends JFrame {
 		addToPanel(panelGroupAddCarriageOptions, carriageComboBox, constraints,
 				1, 1, 1, 1);
 
-		// Initialises different option panels for carriages. On default, shows
-		// the Locomotive options
+		// Initialises different option panels for carriages
 		panelCarriageTypeOptions = new JPanel();
 		constraints.anchor = GridBagConstraints.CENTER;
 		addToPanel(panelGroupAddCarriageOptions, panelCarriageTypeOptions,
@@ -247,6 +268,8 @@ public class ControlPanelView extends JFrame {
 		optionPanelLocomotive = createLocomotiveOptionsPanel();
 		optionPanelPassengerCar = createPassengerCarOptionsPanel();
 		optionPanelFreightCar = createFreightCarOptionsPanel();
+
+		// Defaults locomotive as the active optionpanel
 		panelCarriageTypeOptions.add(optionPanelLocomotive);
 
 		// Add carriage to train button
@@ -314,11 +337,9 @@ public class ControlPanelView extends JFrame {
 
 		// Set locomotive engine spinner
 		locomotiveEngineSpinner = new JSpinner(new SpinnerListModel(
-				new String[] { "E", "S", "D" }));
-		((JSpinner.DefaultEditor) locomotiveEngineSpinner.getEditor())
-				.getTextField().setColumns(3);
-		((JSpinner.DefaultEditor) locomotiveEngineSpinner.getEditor())
-				.getTextField().setEditable(false);
+				LOCOMOTIVE_VALID_ENGINE_TYPES));
+		setSpinnerColumns(locomotiveEngineSpinner, DEFAULT_SPINNER_COLUMNS);
+		setSpinnerEditable(locomotiveEngineSpinner, false);
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(optionsPanel, locomotiveEngineSpinner, constraints, 1, 0, 1,
 				1);
@@ -332,10 +353,8 @@ public class ControlPanelView extends JFrame {
 		// Set locomotive power spinner
 		locomotivePowerSpinner = new JSpinner(
 				new SpinnerNumberModel(1, 1, 9, 1));
-		((JSpinner.DefaultEditor) locomotivePowerSpinner.getEditor())
-				.getTextField().setColumns(3);
-		((JSpinner.DefaultEditor) locomotivePowerSpinner.getEditor())
-				.getTextField().setEditable(false);
+		setSpinnerColumns(locomotivePowerSpinner, DEFAULT_SPINNER_COLUMNS);
+		setSpinnerEditable(locomotivePowerSpinner, false);
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(optionsPanel, locomotivePowerSpinner, constraints, 1, 1, 1,
 				1);
@@ -360,10 +379,10 @@ public class ControlPanelView extends JFrame {
 		addToPanel(optionsPanel, setCarriageSeatsLabel, constraints, 0, 0, 1, 1);
 
 		// Set carriage seats spinner
-		carriageSeatsSpinner = new JSpinner(new SpinnerNumberModel(0, null,
-				null, 1));
-		((JSpinner.DefaultEditor) carriageSeatsSpinner.getEditor())
-				.getTextField().setColumns(3);
+		carriageSeatsSpinner = new JSpinner(new SpinnerNumberModel(
+				DEFAULT_PASSENGER_CAR_SEATS, null, null,
+				DEFAULT_PASSENGER_CAR_SEATS_INCREMENT));
+		setSpinnerColumns(carriageSeatsSpinner, DEFAULT_SPINNER_COLUMNS);
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(optionsPanel, carriageSeatsSpinner, constraints, 1, 0, 1, 1);
 
@@ -387,16 +406,40 @@ public class ControlPanelView extends JFrame {
 		addToPanel(optionsPanel, setFreightTypeLabel, constraints, 0, 0, 1, 1);
 
 		// Set freight type spinner
-		freightTypeSpinner = new JSpinner(new SpinnerListModel(new String[] {
-				"G", "R", "D" }));
-		((JSpinner.DefaultEditor) freightTypeSpinner.getEditor())
-				.getTextField().setColumns(3);
-		((JSpinner.DefaultEditor) freightTypeSpinner.getEditor())
-				.getTextField().setEditable(false);
+		freightTypeSpinner = new JSpinner(new SpinnerListModel(
+				FREIGHT_VALID_TYPES));
+		setSpinnerColumns(freightTypeSpinner, DEFAULT_SPINNER_COLUMNS);
+		setSpinnerEditable(freightTypeSpinner, false);
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(optionsPanel, freightTypeSpinner, constraints, 1, 0, 1, 1);
 
 		return optionsPanel;
+	}
+
+	/**
+	 * Sets the column length of the editor in a JSpinner.
+	 * 
+	 * @param spinner
+	 *            JSpinner object to be modified.
+	 * @param columns
+	 *            Number of columns to set.
+	 */
+	private void setSpinnerColumns(JSpinner spinner, int columns) {
+		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField()
+				.setColumns(columns);
+	}
+
+	/**
+	 * Sets if the field in a JSpinner is editable.
+	 * 
+	 * @param spinner
+	 *            JSpinner object to be modified.
+	 * @param editable
+	 *            True or false to whether it is editable.
+	 */
+	private void setSpinnerEditable(JSpinner spinner, boolean editable) {
+		((JSpinner.DefaultEditor) spinner.getEditor()).getTextField()
+				.setEditable(editable);
 	}
 
 	/**
@@ -469,11 +512,6 @@ public class ControlPanelView extends JFrame {
 	protected String getSelectedCarriageType() {
 		return this.carriageComboBox.getSelectedItem().toString();
 	}
-	
-	private JOptionPane createMessageDialog(String message, int messageType) {
-		JOptionPane dialog = new JOptionPane(message, messageType);
-		return dialog;
-	}
 
 	/**
 	 * Call to throw warning message dialog
@@ -482,9 +520,10 @@ public class ControlPanelView extends JFrame {
 	 *            Message string to be shown
 	 */
 	protected void throwWarning(String message) {
-		createMessageDialog(message, JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, CONTROL_PANEL_WARNING,
+				JOptionPane.WARNING_MESSAGE);
 	}
-	
+
 	/**
 	 * Call to throw error message dialog
 	 * 
@@ -492,7 +531,8 @@ public class ControlPanelView extends JFrame {
 	 *            Message string to be shown
 	 */
 	protected void throwError(String message) {
-		createMessageDialog(message, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, CONTROL_PANEL_ERROR,
+				JOptionPane.WARNING_MESSAGE);
 	}
 
 	// GETTERS FOR FIELDS

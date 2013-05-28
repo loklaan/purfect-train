@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.awt.event.*;
 
 import asgn2Exceptions.TrainException;
-import asgn2GUI.ControlPanelView.carriageTypeIndex;
+import asgn2GUI.ControlPanelView.CarriageTypeIndex;
 
 /**
  * Controller class to manage Action Listeners for various components of the
@@ -18,11 +18,11 @@ public class ControlPanelController {
 	private ControlPanelModel model;
 	private ControlPanelView view;
 
-	private final int LOCOMOTIVE_INDEX = carriageTypeIndex.LOCOMOTIVE
+	private final int LOCOMOTIVE_INDEX = CarriageTypeIndex.LOCOMOTIVE
 			.getValue();
-	private final int FREIGHT_CAR_INDEX = carriageTypeIndex.FREIGHT_CAR
+	private final int FREIGHT_CAR_INDEX = CarriageTypeIndex.FREIGHT_CAR
 			.getValue();
-	private final int PASSENGER_CAR_INDEX = carriageTypeIndex.PASSENGER_CAR
+	private final int PASSENGER_CAR_INDEX = CarriageTypeIndex.PASSENGER_CAR
 			.getValue();
 
 	public ControlPanelController(ControlPanelModel model, ControlPanelView view) {
