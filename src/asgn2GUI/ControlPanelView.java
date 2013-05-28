@@ -21,7 +21,7 @@ public class ControlPanelView extends JFrame {
 
 	// CONSTANTS
 	final int WIDTH = 700;
-	final int HEIGHT = 500;
+	final int HEIGHT = 400;
 	final String DRIVER_ROLE = "Train Driver";
 	final String CONDUCTOR_ROLE = "Train Conductor";
 	final int DEFAULT_SPINNER_COLUMNS = 3;
@@ -118,7 +118,7 @@ public class ControlPanelView extends JFrame {
 		this.getContentPane().add(panelControls, BorderLayout.SOUTH);
 		panelControls.setLayout(new GridLayout());
 
-		// TODO fill this
+		// creates a canvas to draw the train
 		this.panelTrain = createTrainCanvas();
 		this.getContentPane().add(panelTrain, BorderLayout.CENTER);
 
@@ -141,7 +141,6 @@ public class ControlPanelView extends JFrame {
 		this.trainCanvas = new TrainDraw();
 		JScrollPane scrollPanel = new JScrollPane(this.trainCanvas);
 
-		scrollPanel.setSize(100, 200);
 		scrollPanel
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
@@ -532,7 +531,7 @@ public class ControlPanelView extends JFrame {
 	 */
 	protected void throwError(String message) {
 		JOptionPane.showMessageDialog(null, message, CONTROL_PANEL_ERROR,
-				JOptionPane.WARNING_MESSAGE);
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	// GETTERS FOR FIELDS
