@@ -14,6 +14,8 @@ import asgn2RollingStock.*;
 import asgn2Train.DepartingTrain;
 
 /**
+ * View class for
+ * 
  * @author Lochlan Bunn - 8509719
  * @author Murray Coggan - 8291951
  * 
@@ -25,7 +27,6 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	// CONSTANTS
 	private final int WIDTH = 700;
 	private final int HEIGHT = 500;
-	private static final String PROGRAM_TITLE = "Train Control Panel v0.1";
 	final String DRIVER_ROLE = "Train Driver";
 	final String CONDUCTOR_ROLE = "Train Conductor";
 
@@ -35,13 +36,22 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	private TrainDraw trainCanvas;
 	private JPanel panelControls;
 	private JPanel panelConductor;
+	private JPanel panelDriver;
+	// Driver components
 	private JPanel optionPanelLocomotive;
 	private JPanel optionPanelPassengerCar;
 	private JPanel optionPanelFreightCar;
-	private JPanel panelDriver;
 	private JPanel panelGroupCarriageTypeOptions;
-	private final String[] carriageTypes = { "Locomotive", "Passenger Car",
+	private String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
+	private JSpinner carriageWeightSpinner;
+	private JComboBox<String> carriageComboBox;
+	private JButton addCarriageToTrainButton;
+	private JButton removeCarriageButton;
+	// Conductor components
+	private JLabel passengerCarMetrics;
+	private JSpinner addPassengerSpinner;
+	private JButton addPassengerButton;
 
 	/**
 	 * @param title
@@ -158,8 +168,8 @@ public class ControlPanelView extends JFrame implements ActionListener {
 		constraints.anchor = GridBagConstraints.CENTER;
 		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 2, 1);
 
-		// Passenger count
-		JLabel passengerCarMetrics = new JLabel("PEOPLE/SEATS");
+		// Passenger count info
+		passengerCarMetrics = new JLabel("PEOPLE/SEATS");
 		passengerCarMetrics.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 		constraints.insets = new Insets(0, 5, 30, 5);
 		addToPanel(panel, passengerCarMetrics, constraints, 0, 1, 2, 1);
@@ -171,14 +181,14 @@ public class ControlPanelView extends JFrame implements ActionListener {
 		addToPanel(panel, panelGroupAddPassenger, constraints, 0, 2, 1, 1);
 
 		// Add passenger input spinner
-		JSpinner addPassengerSpinner = new JSpinner(new SpinnerNumberModel(
-				9999, null, null, 1));
+		addPassengerSpinner = new JSpinner(new SpinnerNumberModel(9999, null,
+				null, 1));
 		constraints.anchor = GridBagConstraints.EAST;
 		addToPanel(panelGroupAddPassenger, addPassengerSpinner, constraints, 1,
 				2, 1, 1);
 
 		// Add passenger button
-		JButton addPassengerButton = new JButton("Add");
+		addPassengerButton = new JButton("Add");
 		constraints.anchor = GridBagConstraints.WEST;
 		addToPanel(panelGroupAddPassenger, addPassengerButton, constraints, 2,
 				2, 1, 1);
@@ -208,12 +218,12 @@ public class ControlPanelView extends JFrame implements ActionListener {
 				constraints, 0, 0, 1, 1);
 
 		// Set carriage weight spinner
-		JSpinner setCarriageWeightSpinner = new JSpinner(
-				new SpinnerNumberModel(0, null, null, 10));
-		((JSpinner.DefaultEditor) setCarriageWeightSpinner.getEditor())
+		carriageWeightSpinner = new JSpinner(new SpinnerNumberModel(0, null,
+				null, 10));
+		((JSpinner.DefaultEditor) carriageWeightSpinner.getEditor())
 				.getTextField().setColumns(3);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panelGroupAddCarriageOptions, setCarriageWeightSpinner,
+		addToPanel(panelGroupAddCarriageOptions, carriageWeightSpinner,
 				constraints, 1, 0, 1, 1);
 
 		// Add carriage type label
@@ -223,12 +233,11 @@ public class ControlPanelView extends JFrame implements ActionListener {
 				0, 1, 1, 1);
 
 		// Add carriage type combobox with all carriage types
-		JComboBox<String> addCarriageComboBox = new JComboBox<String>(
-				carriageTypes);
-		addCarriageComboBox.addActionListener(this);
+		carriageComboBox = new JComboBox<String>(carriageTypes);
+		carriageComboBox.addActionListener(this);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(panelGroupAddCarriageOptions, addCarriageComboBox,
-				constraints, 1, 1, 1, 1);
+		addToPanel(panelGroupAddCarriageOptions, carriageComboBox, constraints,
+				1, 1, 1, 1);
 
 		// Initialises different option panels for carriages. On default, shows
 		// the Locomotive options
@@ -244,14 +253,14 @@ public class ControlPanelView extends JFrame implements ActionListener {
 		// constraints, 0, 0, 1, 1);
 
 		// Add carriage to train button
-		JButton addCarriageToTrainButton = new JButton("Add to train");
+		addCarriageToTrainButton = new JButton("Add to train");
 		addCarriageToTrainButton.addActionListener(this);
 		constraints.anchor = GridBagConstraints.CENTER;
 		addToPanel(panelGroupAddCarriageOptions, addCarriageToTrainButton,
 				constraints, 0, 3, 2, 1);
 
 		// Remove carriage button
-		JButton removeCarriageButton = new JButton("Remove last carriage");
+		removeCarriageButton = new JButton("Remove last carriage");
 		addToPanel(panel, removeCarriageButton, constraints, 0, 1, 1, 1);
 
 		return panel;
@@ -442,6 +451,92 @@ public class ControlPanelView extends JFrame implements ActionListener {
 			}
 		}
 		revalidate();
+	}
+	
+	// GETTERS FOR FIELDS
+
+	/**
+	 * @return the optionPanelLocomotive
+	 */
+	protected JPanel getOptionPanelLocomotive() {
+		return optionPanelLocomotive;
+	}
+
+	/**
+	 * @return the optionPanelPassengerCar
+	 */
+	protected JPanel getOptionPanelPassengerCar() {
+		return optionPanelPassengerCar;
+	}
+
+	/**
+	 * @return the optionPanelFreightCar
+	 */
+	protected JPanel getOptionPanelFreightCar() {
+		return optionPanelFreightCar;
+	}
+
+	/**
+	 * @return the panelGroupCarriageTypeOptions
+	 */
+	protected JPanel getPanelGroupCarriageTypeOptions() {
+		return panelGroupCarriageTypeOptions;
+	}
+
+	/**
+	 * @return the carriageTypes
+	 */
+	protected String[] getCarriageTypes() {
+		return carriageTypes;
+	}
+
+	/**
+	 * @return the carriageWeightSpinner
+	 */
+	protected JSpinner getCarriageWeightSpinner() {
+		return carriageWeightSpinner;
+	}
+
+	/**
+	 * @return the carriageComboBox
+	 */
+	protected JComboBox<String> getCarriageComboBox() {
+		return carriageComboBox;
+	}
+
+	/**
+	 * @return the addCarriageToTrainButton
+	 */
+	protected JButton getAddCarriageToTrainButton() {
+		return addCarriageToTrainButton;
+	}
+
+	/**
+	 * @return the removeCarriageButton
+	 */
+	protected JButton getRemoveCarriageButton() {
+		return removeCarriageButton;
+	}
+
+	/**
+	 * @return the passengerCarMetrics
+	 */
+	protected JLabel getPassengerCarMetrics() {
+		return passengerCarMetrics;
+	}
+
+	/**
+	 * @return the addPassengerSpinner
+	 */
+	protected JSpinner getAddPassengerSpinner() {
+		return addPassengerSpinner;
+	}
+
+	/**
+	 * @return the addPassengerButton
+	 */
+	protected JButton getAddPassengerButton() {
+		return addPassengerButton;
 	}
 
 }
