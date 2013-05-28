@@ -44,9 +44,21 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	private JPanel panelCarriageTypeOptions;
 	private String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
+
 	enum carriageTypeIndex {
-		LOCOMOTIVE, PASSENGER_CAR, FREIGHT_CAR
+		LOCOMOTIVE(0), PASSENGER_CAR(1), FREIGHT_CAR(2);
+
+		private final int value;
+
+		private carriageTypeIndex(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
 	}
+
 	private JSpinner carriageWeightSpinner;
 	private JComboBox<String> carriageComboBox;
 	private JButton addCarriageToTrainButton;

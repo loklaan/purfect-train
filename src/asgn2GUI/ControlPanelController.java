@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.*;
 
 import asgn2Exceptions.TrainException;
+import asgn2GUI.ControlPanelView.carriageTypeIndex;
 
 /**
  * Controller class to manage Action Listeners for various components of the
@@ -15,6 +16,10 @@ import asgn2Exceptions.TrainException;
 public class ControlPanelController {
 	private ControlPanelModel model;
 	private ControlPanelView view;
+	
+	private final int LOCOMOTIVE_INDEX = carriageTypeIndex.LOCOMOTIVE.getValue();
+	private final int FREIGHT_CAR_INDEX = carriageTypeIndex.FREIGHT_CAR.getValue();
+	private final int PASSENGER_CAR_INDEX = carriageTypeIndex.PASSENGER_CAR.getValue();
 
 	public ControlPanelController(ControlPanelModel model, ControlPanelView view) {
 		this.model = model;
@@ -22,21 +27,27 @@ public class ControlPanelController {
 	}
 
 	/**
-	 * When a request is made for a carriage to be added to a train, the
-	 * following is read and computed before addage:
+	 * When a Carriage type is selected, the appropriate carriage properties are
+	 * shown.
 	 * <ul>
-	 * <li>check if can shunt</li>
-	 * <li>weight</li>
-	 * <li>car type</li>
-	 * <li><em>relevant</em> car properties</li>
-	 * <li>update train canvas</li>
+	 * <li>changes the panel that is shown in the option</li>
 	 * </ul>
 	 */
 	class CarriagePropertiesListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			Component source = (Component) e.getSource();
+			
+			if (source == view.getCarriageComboBox()) {
+				if (view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]) {
+					view.setCarriageTypeOptions(view.getOptionPanelLocomotive());
+				} else if (view.getSelectedCarriageType() == view.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
+					view.setCarriageTypeOptions(view.getOptionPanelPassengerCar());
+				} else if (view.getSelectedCarriageType() == view.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
+					view.setCarriageTypeOptions(view.getOptionPanelFreightCar());
+				}
+			}
 		}
 	}
 
@@ -55,6 +66,7 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Component source = (Component) e.getSource();
 
 		}
 
@@ -73,6 +85,7 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			Component source = (Component) e.getSource();
 
 		}
 
@@ -94,10 +107,11 @@ public class ControlPanelController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Component source = (Component) e.getSource();
-			
+
 			if (source == view.getAddPassengerButton()) {
 				try {
-					model.addPassengers(Integer.parseInt(view.getAddPassengerSpinner().getValue().toString()));
+					model.addPassengers(Integer.parseInt(view
+							.getAddPassengerSpinner().getValue().toString()));
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
