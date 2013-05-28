@@ -387,8 +387,8 @@ public class ControlPanelView extends JFrame {
 		addToPanel(optionsPanel, setFreightTypeLabel, constraints, 0, 0, 1, 1);
 
 		// Set freight type spinner
-		freightTypeSpinner = new JSpinner(new SpinnerListModel(
-				new String[] { "G", "R", "D" }));
+		freightTypeSpinner = new JSpinner(new SpinnerListModel(new String[] {
+				"G", "R", "D" }));
 		((JSpinner.DefaultEditor) freightTypeSpinner.getEditor())
 				.getTextField().setColumns(3);
 		((JSpinner.DefaultEditor) freightTypeSpinner.getEditor())
@@ -587,6 +587,13 @@ public class ControlPanelView extends JFrame {
 	 */
 	protected JSpinner getFreightTypeSpinner() {
 		return freightTypeSpinner;
+	}
+
+	/**
+	 * @return the trainCanvas
+	 */
+	protected TrainDraw getTrainCanvas() {
+		return trainCanvas;
 	}
 
 }
