@@ -32,6 +32,15 @@ public class ControlPanelController {
 		view.addRemoveCarriageListener(new RemoveCarriageListener());
 		view.addAddPassengerListener(new AddPassengerListener());
 	}
+	
+	private void updateTrain(){
+		view.getTrainCanvas().SetTrain(model.getTrain());
+		update();
+	}
+	
+	private void update(){
+		view.revalidate();
+	}
 
 	/**
 	 * When a request is made for a carriage to be added to a train, the
@@ -61,6 +70,7 @@ public class ControlPanelController {
 						.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
 					view.setCarriageTypeOptions(view.getOptionPanelFreightCar());
 				}
+				update();
 			}
 		}
 	}
@@ -81,36 +91,45 @@ public class ControlPanelController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Component source = (Component) e.getSource();
-			if(model.canShunt()){
-				Integer tempWeight = Integer.parseInt(view.getCarriageWeightSpinner().getValue().toString());
-	
-				if(view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]){
-					String tempClass = (Integer.parseInt(view.getLocomotivePowerSpinner().getValue().toString()) + "" + view.getLocomotiveEngineSpinner().getValue().toString());
+			if (model.canShunt()) {
+				Integer tempWeight = Integer.parseInt(view
+						.getCarriageWeightSpinner().getValue().toString());
+
+				if (view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]) {
+					String tempClass = (Integer.parseInt(view
+							.getLocomotivePowerSpinner().getValue().toString())
+							+ "" + view.getLocomotiveEngineSpinner().getValue()
+							.toString());
 					try {
 						model.addLocomotiveToTrain(tempWeight, tempClass);
 					} catch (TrainException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}else if(view.getSelectedCarriageType() == view.getCarriageTypes()[PASSENGER_CAR_INDEX]){
-					Integer tempSeats = Integer.parseInt(view.getCarriageSeatsSpinner().getValue().toString());
+				} else if (view.getSelectedCarriageType() == view
+						.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
+					Integer tempSeats = Integer.parseInt(view
+							.getCarriageSeatsSpinner().getValue().toString());
 					try {
 						model.addPassengerCarToTrain(tempWeight, tempSeats);
 					} catch (TrainException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}else if(view.getSelectedCarriageType() == view.getCarriageTypes()[FREIGHT_CAR_INDEX]){
-					String tempFreightClass = view.getFreightTypeSpinner().getValue().toString();
+				} else if (view.getSelectedCarriageType() == view
+						.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
+					String tempFreightClass = view.getFreightTypeSpinner()
+							.getValue().toString();
 					try {
 						model.addFreightCarToTrain(tempWeight, tempFreightClass);
 					} catch (TrainException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}else{
+				} else {
 					view.throwWarning("Invalid carriage type");
 				}
+				updateTrain();
 			} else {
 				view.throwWarning("Train cannot be shunted");
 			}
@@ -135,8 +154,9 @@ public class ControlPanelController {
 			} catch (TrainException tE) {
 				view.throwWarning("No carriages to remove");
 			}
+			updateTrain();
 		}
-
+		
 	}
 
 	/**
@@ -160,6 +180,7 @@ public class ControlPanelController {
 				try {
 					model.addPassengers(Integer.parseInt(view
 							.getAddPassengerSpinner().getValue().toString()));
+					updateTrain();
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -171,5 +192,7 @@ public class ControlPanelController {
 		}
 
 	}
+	
+	
 
 }
