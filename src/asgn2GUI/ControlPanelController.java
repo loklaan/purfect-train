@@ -16,6 +16,10 @@ import asgn2GUI.ControlPanelView.carriageTypeIndex;
 public class ControlPanelController {
 	private ControlPanelModel model;
 	private ControlPanelView view;
+	
+	private final int LOCOMOTIVE_INDEX = carriageTypeIndex.LOCOMOTIVE.getValue();
+	private final int FREIGHT_CAR_INDEX = carriageTypeIndex.FREIGHT_CAR.getValue();
+	private final int PASSENGER_CAR_INDEX = carriageTypeIndex.PASSENGER_CAR.getValue();
 
 	public ControlPanelController(ControlPanelModel model, ControlPanelView view) {
 		this.model = model;
