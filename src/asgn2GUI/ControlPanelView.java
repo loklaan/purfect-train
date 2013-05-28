@@ -141,6 +141,7 @@ public class ControlPanelView extends JFrame {
 	private JScrollPane createTrainCanvas() {
 		this.trainCanvas = new TrainDraw();
 		JScrollPane scrollPanel = new JScrollPane(this.trainCanvas);
+		trainCanvas.setBackground(Color.DARK_GRAY);
 
 		scrollPanel
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);

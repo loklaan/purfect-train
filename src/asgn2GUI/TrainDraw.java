@@ -30,6 +30,9 @@ public class TrainDraw extends JPanel {
 	private int drawPos = 10;
 	private static DepartingTrain theTrain;
 	private int totalWeight;
+	private Color colorFreight = new Color(0xFA8072);
+	private Color colorPassenger = new Color(0xA585D6);
+	private Color colorLocomotive = new Color(0xA0FF4D);
 
 	public TrainDraw() {
 	}
@@ -107,7 +110,7 @@ public class TrainDraw extends JPanel {
 	 *            The Locomotive to be drawn
 	 */
 	private void drawLoco(Graphics g, Locomotive theLoco) {
-		drawCar(g, Color.ORANGE);
+		drawCar(g, colorLocomotive);
 
 		// Draws the small bars representing the power and relative weight of
 		// the
@@ -168,7 +171,7 @@ public class TrainDraw extends JPanel {
 	 *            The PassengerCar to be drawn
 	 */
 	private void drawPassenger(Graphics g, PassengerCar thePassenger) {
-		drawCar(g, Color.YELLOW);
+		drawCar(g, colorPassenger);
 
 		// Draw the number of passengers and the weight of the car on the side
 		// of the carriage
@@ -197,7 +200,7 @@ public class TrainDraw extends JPanel {
 	 *            The FreightCar to be drawn
 	 */
 	private void drawFreight(Graphics g, FreightCar theFreight) {
-		drawCar(g, Color.GREEN);
+		drawCar(g, colorFreight);
 
 		// Draw the goods and weight of the freight car on the side of the
 		// carriage
