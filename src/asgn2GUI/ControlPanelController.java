@@ -19,6 +19,10 @@ public class ControlPanelController {
 	public ControlPanelController(ControlPanelModel model, ControlPanelView view) {
 		this.model = model;
 		this.view = view;
+		view.addCarriagePropertiesListener(new CarriagePropertiesListener());
+		view.addAddCarriageListener(new AddCarriageListener());
+		view.addRemoveCarriageListener(new RemoveCarriageListener());
+		view.addAddPassengerListener(new AddPassengerListener());
 	}
 
 	/**
@@ -55,7 +59,15 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			if(){
+				model.addLocomotiveToTrain(grossWeight, classification);
+			}else if(){
+				model.addPassengerCarToTrain(grossWeight, numberSeats);
+			}else if(){
+				model.addFreightCarToTrain(grossWeight, goodClass);
+			}else{
+				view.throwWarning("Invalid carriage type");
+			}
 		}
 
 	}
@@ -73,7 +85,11 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			try{
+				model.removeCarriage();
+			} catch (TrainException tE){
+				view.throwWarning("No carriages to remove");
+			}
 		}
 
 	}
@@ -108,6 +124,7 @@ public class ControlPanelController {
 			}
 		}
 
-	}
+	}//Listeners for what?
+	
 
 }
