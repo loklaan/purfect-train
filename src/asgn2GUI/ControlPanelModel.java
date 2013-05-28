@@ -9,6 +9,7 @@ import asgn2RollingStock.*;
  * Train object and it's manipulation.
  * 
  * @author Lochlan Bunn - 8509719
+ * @author Murray Coggan - 8291951
  * 
  */
 public class ControlPanelModel {

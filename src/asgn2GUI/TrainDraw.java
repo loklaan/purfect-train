@@ -10,7 +10,6 @@ import asgn2RollingStock.*;
 import asgn2Train.DepartingTrain;
 
 /**
- * @author Lochlan Bunn - 8509719
  * @author Murray Coggan - 8291951
  * 
  */

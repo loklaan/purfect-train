@@ -12,7 +12,6 @@ import javax.swing.border.*;
  * View class for the GUI of Control Panel. Uses Swing.
  * 
  * @author Lochlan Bunn - 8509719
- * @author Murray Coggan - 8291951
  * 
  */
 public class ControlPanelView extends JFrame {
