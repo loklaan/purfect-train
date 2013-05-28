@@ -139,14 +139,23 @@ public class TrainDraw extends JPanel {
 		// the train
 		g.setColor(Color.BLACK);
 		String tempWeightPower = (totalWeight + "/" + theLoco.power());
+		
+		//Grabs the class of the locomotive
+		String tempString[] = theLoco.toString().split("[(|)]");
+		String tempLocoClass = tempString[1];
+		
 		// Uses FontMetrics to get half of the width
 		// of the passengers string for formatting
 		FontMetrics fm = g.getFontMetrics();
 		// Halves the width
-		int stringWOffset = (fm.stringWidth(tempWeightPower) / 2);
+		int stringWOffset = (fm.stringWidth(tempLocoClass) / 2);
 		int stringHOffset = 4;
+		g.drawString(tempLocoClass,
+				drawPos + (CARRIAGE_WIDTH / 2) - stringWOffset,
+				(CARRIAGE_HEIGHT / 2) - fm.getHeight() + stringHOffset * 3);
+		stringWOffset = (fm.stringWidth(tempWeightPower) / 2);
 		g.drawString(tempWeightPower, drawPos + (CARRIAGE_WIDTH / 2)
-				- stringWOffset, (CARRIAGE_HEIGHT / 2) + stringHOffset);
+				- stringWOffset, (CARRIAGE_HEIGHT / 2) + stringHOffset * 2);
 	}
 
 	/**
