@@ -418,7 +418,7 @@ public class ControlPanelView extends JFrame implements ActionListener {
 
 		return panel;
 	}
-	
+
 	/**
 	 * Removes the existing options panel from panelCarriageTypeOptions and sets
 	 * the new options panel.
@@ -429,6 +429,19 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	protected void setCarriageTypeOptions(JPanel optionsPanel) {
 		this.panelCarriageTypeOptions.removeAll();
 		this.panelCarriageTypeOptions.add(optionsPanel);
+	}
+
+	protected String getSelectedCarriageType() {
+		return this.carriageComboBox.getSelectedItem().toString();
+	}
+
+	/**
+	 * Call to throw message dialog
+	 * 
+	 * @param message Message string to be shown
+	 */
+	protected void throwWarning(String message) {
+		JOptionPane.showMessageDialog(this, message);
 	}
 
 	/*
