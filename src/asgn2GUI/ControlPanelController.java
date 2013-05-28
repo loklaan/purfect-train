@@ -97,8 +97,8 @@ public class ControlPanelController {
 					try {
 						model.addLocomotiveToTrain(tempWeight, tempClass);
 					} catch (TrainException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						view.throwWarning(e1.getMessage());
 					}
 				} else if (view.getSelectedCarriageType() == view
 						.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
@@ -107,8 +107,8 @@ public class ControlPanelController {
 					try {
 						model.addPassengerCarToTrain(tempWeight, tempSeats);
 					} catch (TrainException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						view.throwWarning(e1.getMessage());
 					}
 				} else if (view.getSelectedCarriageType() == view
 						.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
@@ -117,15 +117,15 @@ public class ControlPanelController {
 					try {
 						model.addFreightCarToTrain(tempWeight, tempFreightClass);
 					} catch (TrainException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						view.throwWarning(e1.getMessage());
 					}
 				} else {
 					view.throwWarning("Invalid carriage type");
 				}
 				updateTrain();
 			} else {
-				view.throwWarning("Train cannot be shunted");
+				view.throwError("Train cannot be shunted");
 			}
 		}
 	}
@@ -142,7 +142,7 @@ public class ControlPanelController {
 			try {
 				model.removeCarriage();
 			} catch (TrainException tE) {
-				view.throwWarning("No carriages to remove");
+				view.throwError("No carriages to remove");
 			}
 			updateTrain();
 		}
@@ -165,15 +165,21 @@ public class ControlPanelController {
 
 			if (source == view.getAddPassengerButton()) {
 				try {
-					model.addPassengers(Integer.parseInt(view
-							.getAddPassengerSpinner().getValue().toString()));
+					Integer leftOverPassengers = 0;
+					leftOverPassengers = model.addPassengers(Integer
+							.parseInt(view.getAddPassengerSpinner().getValue()
+									.toString()));
 					updateTrain();
+					if (leftOverPassengers > 0) {
+						view.throwWarning(leftOverPassengers
+								+ "Passengers were unable to board because the carriages are full.");
+					}
 				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					view.throwWarning(e1.getMessage());
 				} catch (TrainException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					view.throwWarning(e1.getMessage());
 				}
 			}
 		}
