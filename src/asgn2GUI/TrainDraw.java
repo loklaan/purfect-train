@@ -10,6 +10,8 @@ import asgn2RollingStock.*;
 import asgn2Train.DepartingTrain;
 
 /**
+ * Class that handles the drawing of a train inside a JPanel.
+ * 
  * @author Murray Coggan - 8291951
  * 
  */
@@ -24,7 +26,7 @@ public class TrainDraw extends JPanel {
 	// draw 10 pixels apart from each other
 	final int DISTANCE = CARRIAGE_WIDTH + 10;
 	final int DEFAULT_DRAW_POS = 10;
-	
+
 	// FIELDS
 	private int drawPos = 10;
 	private static DepartingTrain theTrain;
@@ -140,20 +142,20 @@ public class TrainDraw extends JPanel {
 		// the train
 		g.setColor(Color.BLACK);
 		String tempWeightPower = (totalWeight + "/" + theLoco.power());
-		
-		//Grabs the class of the locomotive
+
+		// Grabs the class of the locomotive
 		String tempString[] = theLoco.toString().split("[(|)]");
 		String tempLocoClass = tempString[1];
-		
+
 		// Uses FontMetrics to get half of the width
 		// of the passengers string for formatting
 		FontMetrics fm = g.getFontMetrics();
 		// Halves the width
 		int stringWOffset = (fm.stringWidth(tempLocoClass) / 2);
 		int stringHOffset = 4;
-		g.drawString(tempLocoClass,
-				drawPos + (CARRIAGE_WIDTH / 2) - stringWOffset,
-				(CARRIAGE_HEIGHT / 2) - fm.getHeight() + stringHOffset * 3);
+		g.drawString(tempLocoClass, drawPos + (CARRIAGE_WIDTH / 2)
+				- stringWOffset, (CARRIAGE_HEIGHT / 2) - fm.getHeight()
+				+ stringHOffset * 3);
 		stringWOffset = (fm.stringWidth(tempWeightPower) / 2);
 		g.drawString(tempWeightPower, drawPos + (CARRIAGE_WIDTH / 2)
 				- stringWOffset, (CARRIAGE_HEIGHT / 2) + stringHOffset * 2);
