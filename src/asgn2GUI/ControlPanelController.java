@@ -11,6 +11,7 @@ import asgn2GUI.ControlPanelView.carriageTypeIndex;
  * Control Panel view.
  * 
  * @author Lochlan Bunn - 8509719
+ * @author Murray Coggan - 8291951
  * 
  */
 public class ControlPanelController {
