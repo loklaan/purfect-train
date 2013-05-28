@@ -39,6 +39,7 @@ public class ControlPanelView extends JFrame {
 	private String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
 
+	// TODO refactor rename and comment enum
 	enum carriageTypeIndex {
 		LOCOMOTIVE(0), PASSENGER_CAR(1), FREIGHT_CAR(2);
 
@@ -57,6 +58,10 @@ public class ControlPanelView extends JFrame {
 	private JComboBox<String> carriageComboBox;
 	private JButton addCarriageToTrainButton;
 	private JButton removeCarriageButton;
+	private JSpinner locomotiveEngineSpinner;
+	private JSpinner locomotivePowerSpinner;
+	private JSpinner carriageSeatsSpinner;
+	private JSpinner freightTypeSpinner;
 	// Conductor components
 	private JLabel passengerCarMetrics;
 	private JSpinner addPassengerSpinner;
@@ -86,7 +91,6 @@ public class ControlPanelView extends JFrame {
 	 */
 	private void createGUI() {
 		this.setSize(WIDTH, HEIGHT);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
 
 		// needs to split center control area in two
@@ -180,7 +184,14 @@ public class ControlPanelView extends JFrame {
 
 		return panel;
 	}
-	
+
+	/**
+	 * Add a AddPassengerListener to relevant components of the GUI
+	 * 
+	 * @param listener
+	 *            Instance of the action listener to be used (which handles the
+	 *            events)
+	 */
 	protected void addAddPassengerListener(ActionListener listener) {
 		this.addPassengerButton.addActionListener(listener);
 	}
@@ -250,15 +261,36 @@ public class ControlPanelView extends JFrame {
 
 		return panel;
 	}
-	
+
+	/**
+	 * Add a CarriagePropertiesListener to relevant components of the GUI
+	 * 
+	 * @param listener
+	 *            Instance of the action listener to be used (which handles the
+	 *            events)
+	 */
 	protected void addCarriagePropertiesListener(ActionListener listener) {
 		this.carriageComboBox.addActionListener(listener);
 	}
-	
-	protected void addAddCarriageListener(ActionListener listener) {
+
+	/**
+	 * Add a AddCarriageListener to relevant components of the GUI
+	 * 
+	 * @param listener
+	 *            Instance of the action listener to be used (which handles the
+	 *            events)
+	 */
+	protected void add(ActionListener listener) {
 		this.addCarriageToTrainButton.addActionListener(listener);
 	}
-	
+
+	/**
+	 * Add a RemoveCarriageListener to relevant components of the GUI
+	 * 
+	 * @param listener
+	 *            Instance of the action listener to be used (which handles the
+	 *            events)
+	 */
 	protected void addRemoveCarriageListener(ActionListener listener) {
 		this.removeCarriageButton.addActionListener(listener);
 	}
@@ -281,15 +313,15 @@ public class ControlPanelView extends JFrame {
 				1, 1);
 
 		// Set locomotive engine spinner
-		JSpinner setLocomotiveEngineSpinner = new JSpinner(
-				new SpinnerListModel(new String[] { "E", "S", "D" }));
-		((JSpinner.DefaultEditor) setLocomotiveEngineSpinner.getEditor())
+		locomotiveEngineSpinner = new JSpinner(new SpinnerListModel(
+				new String[] { "E", "S", "D" }));
+		((JSpinner.DefaultEditor) locomotiveEngineSpinner.getEditor())
 				.getTextField().setColumns(3);
-		((JSpinner.DefaultEditor) setLocomotiveEngineSpinner.getEditor())
+		((JSpinner.DefaultEditor) locomotiveEngineSpinner.getEditor())
 				.getTextField().setEditable(false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setLocomotiveEngineSpinner, constraints, 1, 0,
-				1, 1);
+		addToPanel(optionsPanel, locomotiveEngineSpinner, constraints, 1, 0, 1,
+				1);
 
 		// Set locomotive power label
 		JLabel setLocomotivePowerLabel = new JLabel("Power Level:");
@@ -298,15 +330,15 @@ public class ControlPanelView extends JFrame {
 				1);
 
 		// Set locomotive power spinner
-		JSpinner setLocomotivePowerSpinner = new JSpinner(
+		locomotivePowerSpinner = new JSpinner(
 				new SpinnerNumberModel(1, 1, 9, 1));
-		((JSpinner.DefaultEditor) setLocomotivePowerSpinner.getEditor())
+		((JSpinner.DefaultEditor) locomotivePowerSpinner.getEditor())
 				.getTextField().setColumns(3);
-		((JSpinner.DefaultEditor) setLocomotivePowerSpinner.getEditor())
+		((JSpinner.DefaultEditor) locomotivePowerSpinner.getEditor())
 				.getTextField().setEditable(false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setLocomotivePowerSpinner, constraints, 1, 1,
-				1, 1);
+		addToPanel(optionsPanel, locomotivePowerSpinner, constraints, 1, 1, 1,
+				1);
 
 		return optionsPanel;
 	}
@@ -328,13 +360,12 @@ public class ControlPanelView extends JFrame {
 		addToPanel(optionsPanel, setCarriageSeatsLabel, constraints, 0, 0, 1, 1);
 
 		// Set carriage seats spinner
-		JSpinner setCarriageSeatsSpinner = new JSpinner(new SpinnerNumberModel(
-				0, null, null, 1));
-		((JSpinner.DefaultEditor) setCarriageSeatsSpinner.getEditor())
+		carriageSeatsSpinner = new JSpinner(new SpinnerNumberModel(0, null,
+				null, 1));
+		((JSpinner.DefaultEditor) carriageSeatsSpinner.getEditor())
 				.getTextField().setColumns(3);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setCarriageSeatsSpinner, constraints, 1, 0, 1,
-				1);
+		addToPanel(optionsPanel, carriageSeatsSpinner, constraints, 1, 0, 1, 1);
 
 		return optionsPanel;
 	}
@@ -356,14 +387,14 @@ public class ControlPanelView extends JFrame {
 		addToPanel(optionsPanel, setFreightTypeLabel, constraints, 0, 0, 1, 1);
 
 		// Set freight type spinner
-		JSpinner setFreightTypeSpinner = new JSpinner(new SpinnerListModel(
+		freightTypeSpinner = new JSpinner(new SpinnerListModel(
 				new String[] { "G", "R", "D" }));
-		((JSpinner.DefaultEditor) setFreightTypeSpinner.getEditor())
+		((JSpinner.DefaultEditor) freightTypeSpinner.getEditor())
 				.getTextField().setColumns(3);
-		((JSpinner.DefaultEditor) setFreightTypeSpinner.getEditor())
+		((JSpinner.DefaultEditor) freightTypeSpinner.getEditor())
 				.getTextField().setEditable(false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, setFreightTypeSpinner, constraints, 1, 0, 1, 1);
+		addToPanel(optionsPanel, freightTypeSpinner, constraints, 1, 0, 1, 1);
 
 		return optionsPanel;
 	}
@@ -528,6 +559,34 @@ public class ControlPanelView extends JFrame {
 	 */
 	protected JButton getAddPassengerButton() {
 		return addPassengerButton;
+	}
+
+	/**
+	 * @return the locomotiveEngineSpinner
+	 */
+	protected JSpinner getLocomotiveEngineSpinner() {
+		return locomotiveEngineSpinner;
+	}
+
+	/**
+	 * @return the locomotivePowerSpinner
+	 */
+	protected JSpinner getLocomotivePowerSpinner() {
+		return locomotivePowerSpinner;
+	}
+
+	/**
+	 * @return the carriageSeatsSpinner
+	 */
+	protected JSpinner getCarriageSeatsSpinner() {
+		return carriageSeatsSpinner;
+	}
+
+	/**
+	 * @return the freightTypeSpinner
+	 */
+	protected JSpinner getFreightTypeSpinner() {
+		return freightTypeSpinner;
 	}
 
 }
