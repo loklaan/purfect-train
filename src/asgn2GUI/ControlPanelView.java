@@ -41,7 +41,7 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	private JPanel optionPanelLocomotive;
 	private JPanel optionPanelPassengerCar;
 	private JPanel optionPanelFreightCar;
-	private JPanel panelGroupCarriageTypeOptions;
+	private JPanel panelCarriageTypeOptions;
 	private String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
 	private JSpinner carriageWeightSpinner;
@@ -241,16 +241,14 @@ public class ControlPanelView extends JFrame implements ActionListener {
 
 		// Initialises different option panels for carriages. On default, shows
 		// the Locomotive options
-		panelGroupCarriageTypeOptions = new JPanel();
+		panelCarriageTypeOptions = new JPanel();
 		constraints.anchor = GridBagConstraints.CENTER;
-		addToPanel(panelGroupAddCarriageOptions, panelGroupCarriageTypeOptions,
+		addToPanel(panelGroupAddCarriageOptions, panelCarriageTypeOptions,
 				constraints, 0, 2, 2, 1);
 		optionPanelLocomotive = createLocomotiveOptionsPanel();
 		optionPanelPassengerCar = createPassengerCarOptionsPanel();
 		optionPanelFreightCar = createFreightCarOptionsPanel();
-		panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
-		// addToPanel(panelGroupCarriageTypeOptions, optionPanelLocomotive,
-		// constraints, 0, 0, 1, 1);
+		panelCarriageTypeOptions.add(optionPanelLocomotive);
 
 		// Add carriage to train button
 		addCarriageToTrainButton = new JButton("Add to train");
@@ -420,6 +418,18 @@ public class ControlPanelView extends JFrame implements ActionListener {
 
 		return panel;
 	}
+	
+	/**
+	 * Removes the existing options panel from panelCarriageTypeOptions and sets
+	 * the new options panel.
+	 * 
+	 * @param optionsPanel
+	 *            the panelCarriageTypeOptions to set
+	 */
+	protected void setCarriageTypeOptions(JPanel optionsPanel) {
+		this.panelCarriageTypeOptions.removeAll();
+		this.panelCarriageTypeOptions.add(optionsPanel);
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -431,14 +441,14 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() instanceof JComboBox) {
 			if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[0]) {
-				panelGroupCarriageTypeOptions.removeAll();
-				panelGroupCarriageTypeOptions.add(optionPanelLocomotive);
+				panelCarriageTypeOptions.removeAll();
+				panelCarriageTypeOptions.add(optionPanelLocomotive);
 			} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[1]) {
-				panelGroupCarriageTypeOptions.removeAll();
-				panelGroupCarriageTypeOptions.add(optionPanelPassengerCar);
+				panelCarriageTypeOptions.removeAll();
+				panelCarriageTypeOptions.add(optionPanelPassengerCar);
 			} else if (((JComboBox) e.getSource()).getSelectedItem() == carriageTypes[2]) {
-				panelGroupCarriageTypeOptions.removeAll();
-				panelGroupCarriageTypeOptions.add(optionPanelFreightCar);
+				panelCarriageTypeOptions.removeAll();
+				panelCarriageTypeOptions.add(optionPanelFreightCar);
 			}
 		}
 		if (e.getSource() instanceof JButton) {
@@ -452,7 +462,7 @@ public class ControlPanelView extends JFrame implements ActionListener {
 		}
 		revalidate();
 	}
-	
+
 	// GETTERS FOR FIELDS
 
 	/**
@@ -480,7 +490,7 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	 * @return the panelGroupCarriageTypeOptions
 	 */
 	protected JPanel getPanelGroupCarriageTypeOptions() {
-		return panelGroupCarriageTypeOptions;
+		return panelCarriageTypeOptions;
 	}
 
 	/**
