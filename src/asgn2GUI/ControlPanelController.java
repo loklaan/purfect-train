@@ -1,6 +1,9 @@
 package asgn2GUI;
 
+import java.awt.Component;
 import java.awt.event.*;
+
+import asgn2Exceptions.TrainException;
 
 /**
  * Controller class to manage Action Listeners for various components of the
@@ -90,7 +93,19 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			Component source = (Component) e.getSource();
+			
+			if (source == view.getAddPassengerButton()) {
+				try {
+					model.addPassengers(Integer.parseInt(view.getAddPassengerSpinner().getValue().toString()));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (TrainException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 		}
 
 	}
