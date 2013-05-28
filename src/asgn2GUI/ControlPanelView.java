@@ -44,6 +44,21 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	private JPanel panelCarriageTypeOptions;
 	private String[] carriageTypes = { "Locomotive", "Passenger Car",
 			"Freight Car" };
+
+	enum carriageTypeIndex {
+		LOCOMOTIVE(0), PASSENGER_CAR(1), FREIGHT_CAR(2);
+
+		private final int value;
+
+		private carriageTypeIndex(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+	}
+
 	private JSpinner carriageWeightSpinner;
 	private JComboBox<String> carriageComboBox;
 	private JButton addCarriageToTrainButton;
@@ -438,7 +453,8 @@ public class ControlPanelView extends JFrame implements ActionListener {
 	/**
 	 * Call to throw message dialog
 	 * 
-	 * @param message Message string to be shown
+	 * @param message
+	 *            Message string to be shown
 	 */
 	protected void throwWarning(String message) {
 		JOptionPane.showMessageDialog(this, message);

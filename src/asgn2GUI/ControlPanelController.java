@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.event.*;
 
 import asgn2Exceptions.TrainException;
+import asgn2GUI.ControlPanelView.carriageTypeIndex;
 
 /**
  * Controller class to manage Action Listeners for various components of the
@@ -40,7 +41,17 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			view.revalidate();
+			Component source = (Component) e.getSource();
+			
+			if (source == view.getCarriageComboBox()) {
+				if (view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]) {
+					view.setCarriageTypeOptions(view.getOptionPanelLocomotive());
+				} else if (view.getSelectedCarriageType() == view.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
+					view.setCarriageTypeOptions(view.getOptionPanelPassengerCar());
+				} else if (view.getSelectedCarriageType() == view.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
+					view.setCarriageTypeOptions(view.getOptionPanelFreightCar());
+				}
+			}
 		}
 	}
 
