@@ -33,26 +33,25 @@ public class ControlPanelController {
 		view.addRemoveCarriageListener(new RemoveCarriageListener());
 		view.addAddPassengerListener(new AddPassengerListener());
 	}
-	
-	private void updateTrain(){
+
+	/**
+	 * Updates the train in the model
+	 */
+	private void updateTrain() {
 		view.getTrainCanvas().SetTrain(model.getTrain());
 		update();
 	}
-	
-	private void update(){
+
+	/**
+	 * Revalidates the GUI
+	 */
+	private void update() {
 		view.revalidate();
 	}
 
 	/**
-	 * When a request is made for a carriage to be added to a train, the
-	 * following is read and computed before addage:
-	 * <ul>
-	 * <li>check if can shunt</li>
-	 * <li>weight</li>
-	 * <li>car type</li>
-	 * <li><em>relevant</em> car properties</li>
-	 * <li>update train canvas</li>
-	 * </ul>
+	 * Action listener for the CarriageComboBox. Changes the panel displayed
+	 * depending on which carriage is selected
 	 */
 	class CarriagePropertiesListener implements ActionListener {
 
@@ -77,15 +76,9 @@ public class ControlPanelController {
 	}
 
 	/**
-	 * When a request is made for a carriage to be added to a train, the
-	 * following is read and computed before addage:
-	 * <ul>
-	 * <li>check if can shunt</li>
-	 * <li>weight</li>
-	 * <li>car type</li>
-	 * <li><em>relevant</em> car properties</li>
-	 * <li>update train canvas</li>
-	 * </ul>
+	 * Action Listener for adding a carriage. Adds a carriage of the specified
+	 * type to the train. Throws error messages if shunting operations cannot be
+	 * performed, or if the carriage parameters are incorrect
 	 */
 	class AddCarriageListener implements ActionListener {
 
@@ -138,13 +131,9 @@ public class ControlPanelController {
 	}
 
 	/**
-	 * When a request is made for a carriage to be removed from a train, the
-	 * following is done:
-	 * <ul>
-	 * <li>check if can shunt</li>
-	 * <li>remove last carriage</li>
-	 * <li>update train canvas</li>
-	 * </ul>
+	 * Action Listener for the button to remove a carriage. Attempts to remove
+	 * the last carriage on the train. Outputs an error message if the train
+	 * currently has no carriages
 	 */
 	class RemoveCarriageListener implements ActionListener {
 
@@ -157,19 +146,16 @@ public class ControlPanelController {
 			}
 			updateTrain();
 		}
-		
+
 	}
 
 	/**
-	 * When a request is made for a number of passengers to be added to a train,
-	 * the following is done:
-	 * <ul>
-	 * <li>does train have passenger cars</li>
-	 * <li>is train full</li>
-	 * <li>add passengers</li>
-	 * <li>update conductor metrics</li>
-	 * <li>update train canvas</li>
-	 * </ul>
+	 * Action Listener for the button to add passengers. Attempts to add
+	 * passengers equal to the value of the AddPassengerSpinner, outputs an
+	 * error message if the number of passengers is negative, or if there are
+	 * any leftover passengers. The leftover passengers error message also
+	 * displays the number of leftover passengers
+	 * 
 	 */
 	class AddPassengerListener implements ActionListener {
 
@@ -193,7 +179,5 @@ public class ControlPanelController {
 		}
 
 	}
-	
-	
 
 }
