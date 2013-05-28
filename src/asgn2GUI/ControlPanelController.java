@@ -16,10 +16,13 @@ import asgn2GUI.ControlPanelView.carriageTypeIndex;
 public class ControlPanelController {
 	private ControlPanelModel model;
 	private ControlPanelView view;
-	
-	private final int LOCOMOTIVE_INDEX = carriageTypeIndex.LOCOMOTIVE.getValue();
-	private final int FREIGHT_CAR_INDEX = carriageTypeIndex.FREIGHT_CAR.getValue();
-	private final int PASSENGER_CAR_INDEX = carriageTypeIndex.PASSENGER_CAR.getValue();
+
+	private final int LOCOMOTIVE_INDEX = carriageTypeIndex.LOCOMOTIVE
+			.getValue();
+	private final int FREIGHT_CAR_INDEX = carriageTypeIndex.FREIGHT_CAR
+			.getValue();
+	private final int PASSENGER_CAR_INDEX = carriageTypeIndex.PASSENGER_CAR
+			.getValue();
 
 	public ControlPanelController(ControlPanelModel model, ControlPanelView view) {
 		this.model = model;
@@ -46,13 +49,16 @@ public class ControlPanelController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Component source = (Component) e.getSource();
-			
+
 			if (source == view.getCarriageComboBox()) {
 				if (view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]) {
 					view.setCarriageTypeOptions(view.getOptionPanelLocomotive());
-				} else if (view.getSelectedCarriageType() == view.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
-					view.setCarriageTypeOptions(view.getOptionPanelPassengerCar());
-				} else if (view.getSelectedCarriageType() == view.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
+				} else if (view.getSelectedCarriageType() == view
+						.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
+					view.setCarriageTypeOptions(view
+							.getOptionPanelPassengerCar());
+				} else if (view.getSelectedCarriageType() == view
+						.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
 					view.setCarriageTypeOptions(view.getOptionPanelFreightCar());
 				}
 			}
@@ -74,17 +80,26 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(){
-				model.addLocomotiveToTrain(grossWeight, classification);
-			}else if(){
-				model.addPassengerCarToTrain(grossWeight, numberSeats);
-			}else if(){
-				model.addFreightCarToTrain(grossWeight, goodClass);
-			}else{
-				view.throwWarning("Invalid carriage type");
+			Component source = (Component) e.getSource();
+			if(model.canShunt()){
+				Integer tempWeight = Integer.parseInt(view.getCarriageWeightSpinner().getValue().toString());
+	
+				if(view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]){
+					String tempClass = (Integer.parseInt(view.getLocomotivePowerSpinner().getValue().toString()) + "" + view.getLocomotiveEngineSpinner().getValue().toString())
+					model.addLocomotiveToTrain(tempWeight, tempClass );
+				}else if(view.getSelectedCarriageType() == view.getCarriageTypes()[PASSENGER_CAR_INDEX]){
+					Integer tempSeats = Integer.parseInt(view.getCarriageSeatsSpinner().getValue().toString());
+					model.addPassengerCarToTrain(tempWeight, numberSeats);
+				}else if(view.getSelectedCarriageType() == view.getCarriageTypes()[FREIGHT_CAR_INDEX]){
+					String tempFreightClass = view.getFreightClassSpinner().getValue().toString();
+					model.addFreightCarToTrain(tempWeight, tempFreightClass);
+				}else{
+					view.throwWarning("Invalid carriage type");
+				}
+			} else {
+				view.throwWarning("Train cannot be shunted");
 			}
 		}
-
 	}
 
 	/**
@@ -100,9 +115,9 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try{
+			try {
 				model.removeCarriage();
-			} catch (TrainException tE){
+			} catch (TrainException tE) {
 				view.throwWarning("No carriages to remove");
 			}
 		}
@@ -125,10 +140,11 @@ public class ControlPanelController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Component source = (Component) e.getSource();
-			
+
 			if (source == view.getAddPassengerButton()) {
 				try {
-					model.addPassengers(Integer.parseInt(view.getAddPassengerSpinner().getValue().toString()));
+					model.addPassengers(Integer.parseInt(view
+							.getAddPassengerSpinner().getValue().toString()));
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -139,7 +155,6 @@ public class ControlPanelController {
 			}
 		}
 
-	}//Listeners for what?
-	
+	}
 
 }
