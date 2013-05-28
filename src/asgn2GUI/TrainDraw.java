@@ -120,7 +120,6 @@ public class TrainDraw extends JPanel {
 				barHeight);
 		g.fillRect(drawPos, CARRIAGE_HEIGHT + barOffset, CARRIAGE_WIDTH,
 				barHeight);
-		barOffset += (barOffset + barHeight);
 		if (theLoco.power() < totalWeight) {
 			weightBarLength = CARRIAGE_WIDTH;
 		} else {
