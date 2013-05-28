@@ -92,7 +92,7 @@ public class DepartingTrain {
 		} else if (newCarriage instanceof PassengerCar) {
 			if (getLastCarriage() instanceof FreightCar) {
 				throw new TrainException(
-						"Passengers must be added after a Locomotive and before FreightCars.");
+						"Passenger Car must be added after a Locomotive and before a Freight Car.");
 			}
 			carriages.add(newCarriage); // add
 			this.numberOfSeats += ((PassengerCar) getLastCarriage())
@@ -143,8 +143,6 @@ public class DepartingTrain {
 	public RollingStock nextCarriage() {
 		this.carriagesIterator++;
 		try {
-			// TODO: acts just like firstCarriage, after a ++ on -1 (could
-			// refactor?)
 			return carriages.get(carriagesIterator);
 		} catch (IndexOutOfBoundsException e) { // 'next' element does not exist
 			return null;

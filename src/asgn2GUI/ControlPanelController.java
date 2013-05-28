@@ -128,11 +128,11 @@ public class ControlPanelController {
 						view.throwWarning(e1.getMessage());
 					}
 				} else {
-					view.throwWarning("Invalid carriage type");
+					view.throwWarning("Invalid carriage type.");
 				}
 				updateTrain();
 			} else {
-				view.throwError("Train cannot be shunted");
+				view.throwError("Carriage cannot be added because passengers are aboard.");
 			}
 		}
 	}
@@ -146,12 +146,16 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			try {
-				model.removeCarriage();
-			} catch (TrainException tE) {
-				view.throwError("No carriages to remove");
+			if (model.canShunt()) {
+				try {
+					model.removeCarriage();
+				} catch (TrainException tE) {
+					view.throwError("No carriages to remove.");
+				}
+				updateTrain();
+			} else {
+				view.throwError("Cannot remove carriages once passengers are aboard.");
 			}
-			updateTrain();
 		}
 
 	}
@@ -180,7 +184,7 @@ public class ControlPanelController {
 					updatePassengerMetrics();
 					if (leftOverPassengers > 0) {
 						view.throwWarning(leftOverPassengers
-								+ "Passengers were unable to board because the carriages are full.");
+								+ " passengers were unable to board because the carriages are full.");
 					}
 				} catch (NumberFormatException e1) {
 					e1.printStackTrace();
