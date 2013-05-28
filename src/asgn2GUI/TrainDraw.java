@@ -55,6 +55,7 @@ public class TrainDraw extends JPanel {
 	public void SetTrain(DepartingTrain theTrain){
 		this.theTrain = theTrain;
 		RollingStock tempCar = theTrain.firstCarriage();
+		totalWeight = 0;
 		int tempNoCars = 0;
 		while(tempCar != null){
 			totalWeight += tempCar.getGrossWeight();
