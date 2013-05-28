@@ -118,7 +118,7 @@ public class ControlPanelView extends JFrame {
 		this.getContentPane().add(panelControls, BorderLayout.SOUTH);
 		panelControls.setLayout(new GridLayout());
 
-		// TODO fill this
+		// creates a canvas to draw the train
 		this.panelTrain = createTrainCanvas();
 		this.getContentPane().add(panelTrain, BorderLayout.CENTER);
 
@@ -532,7 +532,7 @@ public class ControlPanelView extends JFrame {
 	 */
 	protected void throwError(String message) {
 		JOptionPane.showMessageDialog(null, message, CONTROL_PANEL_ERROR,
-				JOptionPane.WARNING_MESSAGE);
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	// GETTERS FOR FIELDS
