@@ -41,6 +41,12 @@ public class ControlPanelController {
 		view.getTrainCanvas().SetTrain(model.getTrain());
 		update();
 	}
+	
+	private void updatePassengerMetrics(){
+		String metrics = (model.getPassengersOnBoard() + "/" + model.getNumberSeats());
+		view.getPassengerCarMetrics().setText(metrics);
+		update();
+	}
 
 	/**
 	 * Revalidates the GUI
@@ -170,6 +176,7 @@ public class ControlPanelController {
 							.parseInt(view.getAddPassengerSpinner().getValue()
 									.toString()));
 					updateTrain();
+					updatePassengerMetrics();
 					if (leftOverPassengers > 0) {
 						view.throwWarning(leftOverPassengers
 								+ "Passengers were unable to board because the carriages are full.");
