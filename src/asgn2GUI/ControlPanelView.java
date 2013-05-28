@@ -174,7 +174,7 @@ public class ControlPanelView extends JFrame {
 		constraints = defaultControlPanelConstraints(constraints);
 
 		// Passenger count label
-		JLabel passengerCarMetricsLabel = new JLabel("Passenger Metrics");
+		JLabel passengerCarMetricsLabel = new JLabel("Boarded / Capacity");
 		constraints.anchor = GridBagConstraints.CENTER;
 		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 2, 1);
 
