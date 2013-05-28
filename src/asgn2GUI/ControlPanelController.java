@@ -40,7 +40,7 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			view.revalidate();
 		}
 	}
 
