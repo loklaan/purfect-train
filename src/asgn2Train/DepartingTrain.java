@@ -81,11 +81,11 @@ public class DepartingTrain {
 					"Cannot add carriages once passengers are aboard the train.");
 		}
 		if (newCarriage instanceof Locomotive) {
-			if (carriages.size() > 1) {
+			if (isTrainEmpty()) {
+				carriages.add(newCarriage); // add
+			} else {
 				throw new TrainException(
 						"Locomotive must be added as the first carriage.");
-			} else {
-				carriages.add(newCarriage); // add
 			}
 		} else if (newCarriage instanceof FreightCar) {
 			carriages.add(newCarriage); // add

@@ -119,6 +119,12 @@ public class TrainTests {
 		testDepartingTrain.addCarriage(testFreightCar);
 		testDepartingTrain.addCarriage(testLocomotive);
 	}
+	
+	@Test(expected = TrainException.class)
+	public void testInvalidTrainCarOrderSeven() throws TrainException {
+		testDepartingTrain.addCarriage(testLocomotive);
+		testDepartingTrain.addCarriage(testLocomotive);
+	}
 
 	/**
 	 * First carriage returns null if no carriages.
