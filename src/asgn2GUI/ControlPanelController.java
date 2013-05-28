@@ -41,9 +41,10 @@ public class ControlPanelController {
 		view.getTrainCanvas().SetTrain(model.getTrain());
 		update();
 	}
-	
-	private void updatePassengerMetrics(){
-		String metrics = (model.getPassengersOnBoard() + "/" + model.getNumberSeats());
+
+	private void updatePassengerMetrics() {
+		String metrics = (model.getPassengersOnBoard() + "/" + model
+				.getNumberSeats());
 		view.getPassengerCarMetrics().setText(metrics);
 		update();
 	}
@@ -90,38 +91,38 @@ public class ControlPanelController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Component source = (Component) e.getSource();
 			if (model.canShunt()) {
-				Integer tempWeight = Integer.parseInt(view
+				Integer weight = Integer.parseInt(view
 						.getCarriageWeightSpinner().getValue().toString());
 
 				if (view.getSelectedCarriageType() == view.getCarriageTypes()[LOCOMOTIVE_INDEX]) {
-					String tempClass = (Integer.parseInt(view
+					String classType = (Integer.parseInt(view
 							.getLocomotivePowerSpinner().getValue().toString())
 							+ "" + view.getLocomotiveEngineSpinner().getValue()
 							.toString());
 					try {
-						model.addLocomotiveToTrain(tempWeight, tempClass);
+						model.addLocomotiveToTrain(weight, classType);
 					} catch (TrainException e1) {
 						e1.printStackTrace();
 						view.throwWarning(e1.getMessage());
 					}
 				} else if (view.getSelectedCarriageType() == view
 						.getCarriageTypes()[PASSENGER_CAR_INDEX]) {
-					Integer tempSeats = Integer.parseInt(view
+					Integer seats = Integer.parseInt(view
 							.getCarriageSeatsSpinner().getValue().toString());
 					try {
-						model.addPassengerCarToTrain(tempWeight, tempSeats);
+						model.addPassengerCarToTrain(weight, seats);
+						updatePassengerMetrics();
 					} catch (TrainException e1) {
 						e1.printStackTrace();
 						view.throwWarning(e1.getMessage());
 					}
 				} else if (view.getSelectedCarriageType() == view
 						.getCarriageTypes()[FREIGHT_CAR_INDEX]) {
-					String tempFreightClass = view.getFreightTypeSpinner()
+					String freightType = view.getFreightTypeSpinner()
 							.getValue().toString();
 					try {
-						model.addFreightCarToTrain(tempWeight, tempFreightClass);
+						model.addFreightCarToTrain(weight, freightType);
 					} catch (TrainException e1) {
 						e1.printStackTrace();
 						view.throwWarning(e1.getMessage());
