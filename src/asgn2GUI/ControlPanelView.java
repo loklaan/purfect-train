@@ -35,6 +35,7 @@ public class ControlPanelView extends JFrame {
 	final int DEFAULT_PASSENGER_AMOUNT = 0;
 	final String CONTROL_PANEL_ERROR = "Control Panel: Error";
 	final String CONTROL_PANEL_WARNING = "Control Panel: Warning";
+	final String DEFAULT_PASSENGER_METRICS = "0/0";
 
 	// FIELDS
 	private JScrollPane panelTrain;
@@ -177,7 +178,7 @@ public class ControlPanelView extends JFrame {
 		addToPanel(panel, passengerCarMetricsLabel, constraints, 0, 0, 2, 1);
 
 		// Passenger count info
-		passengerCarMetrics = new JLabel("PEOPLE/SEATS");
+		passengerCarMetrics = new JLabel(DEFAULT_PASSENGER_METRICS);
 		passengerCarMetrics.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 		constraints.insets = new Insets(0, 5, 30, 5);
 		addToPanel(panel, passengerCarMetrics, constraints, 0, 1, 2, 1);
