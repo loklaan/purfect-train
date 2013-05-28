@@ -329,25 +329,10 @@ public class ControlPanelView extends JFrame {
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints = defaultControlPanelConstraints(constraints);
 
-		// Set locomotive engine label
-		JLabel setLocomotiveEngineLabel = new JLabel("Engine Type:");
-		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(optionsPanel, setLocomotiveEngineLabel, constraints, 0, 0,
-				1, 1);
-
-		// Set locomotive engine spinner
-		locomotiveEngineSpinner = new JSpinner(new SpinnerListModel(
-				LOCOMOTIVE_VALID_ENGINE_TYPES));
-		setSpinnerColumns(locomotiveEngineSpinner, DEFAULT_SPINNER_COLUMNS);
-		setSpinnerEditable(locomotiveEngineSpinner, false);
-		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, locomotiveEngineSpinner, constraints, 1, 0, 1,
-				1);
-
 		// Set locomotive power label
 		JLabel setLocomotivePowerLabel = new JLabel("Power Level:");
 		constraints.anchor = GridBagConstraints.EAST;
-		addToPanel(optionsPanel, setLocomotivePowerLabel, constraints, 0, 1, 1,
+		addToPanel(optionsPanel, setLocomotivePowerLabel, constraints, 0, 0, 1,
 				1);
 
 		// Set locomotive power spinner
@@ -356,7 +341,22 @@ public class ControlPanelView extends JFrame {
 		setSpinnerColumns(locomotivePowerSpinner, DEFAULT_SPINNER_COLUMNS);
 		setSpinnerEditable(locomotivePowerSpinner, false);
 		constraints.anchor = GridBagConstraints.WEST;
-		addToPanel(optionsPanel, locomotivePowerSpinner, constraints, 1, 1, 1,
+		addToPanel(optionsPanel, locomotivePowerSpinner, constraints, 1, 0, 1,
+				1);
+		
+		// Set locomotive engine label
+		JLabel setLocomotiveEngineLabel = new JLabel("Engine Type:");
+		constraints.anchor = GridBagConstraints.EAST;
+		addToPanel(optionsPanel, setLocomotiveEngineLabel, constraints, 0, 1,
+				1, 1);
+		
+		// Set locomotive engine spinner
+		locomotiveEngineSpinner = new JSpinner(new SpinnerListModel(
+				LOCOMOTIVE_VALID_ENGINE_TYPES));
+		setSpinnerColumns(locomotiveEngineSpinner, DEFAULT_SPINNER_COLUMNS);
+		setSpinnerEditable(locomotiveEngineSpinner, false);
+		constraints.anchor = GridBagConstraints.WEST;
+		addToPanel(optionsPanel, locomotiveEngineSpinner, constraints, 1, 1, 1,
 				1);
 
 		return optionsPanel;
