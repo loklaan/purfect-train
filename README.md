@@ -12,6 +12,3 @@ Tested heirachy of classes to encapsulate different types of train carriages; us
 
 ##Part Train
 YEAH TRAINS
-
-###Broken Parts
-* passenger metrics will not update when removing a passenger carriage

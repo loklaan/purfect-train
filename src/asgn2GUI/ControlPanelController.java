@@ -152,6 +152,7 @@ public class ControlPanelController {
 				} catch (TrainException tE) {
 					view.throwError("No carriages to remove.");
 				}
+				updatePassengerMetrics(); // lazy overhead metrics update
 				updateTrain();
 			} else {
 				view.throwError("Cannot remove carriages once passengers are aboard.");
